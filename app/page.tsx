@@ -25,10 +25,37 @@ import ServiceExperience from './components/ServiceExperience';
 import LoyaltyFutureOrders from './components/LoyaltyFutureOrders';
 import Recommendation from './components/Recommendation';
 import Additional from './components/Additional';
+import { submitSurvey } from './actions/submitSurvey';
 
 export default function Home() {
   const [open, setOpen] = useState(false);
   const [value, setValue] = useState('');
+
+  const [name, setName] = useState('');
+
+  const [overallRating, setOverallRating] = useState(0);
+
+  // food quality
+  const [foodRating, setFoodRating] = useState(0);
+  const [foodQualityQ1, setFoodQualityQ1] = useState('');
+  const [foodQualityQ2, setFoodQualityQ2] = useState('');
+
+  // service experience
+  const [serviceRating, setServiceRating] = useState(0);
+  const [serviceQ1, setServiceQ1] = useState('');
+
+  // recommendation
+  const [recommendation, setRecommendation] = useState(true);
+  const [recommendationQ1, setRecommendationQ1] = useState('');
+
+  // loyalty and future orders
+  const [LFORating, setLFORating] = useState(0);
+  const [LFOQ1, setLFOQ1] = useState('');
+  const [LFOQ2, setLFOQ2] = useState('');
+  const [LFOQ3, setLFOQ3] = useState('');
+
+  // Additional
+  const [feedback, setFeedback] = useState('');
 
   const frameworks = [
     {
@@ -41,12 +68,36 @@ export default function Home() {
     },
   ];
 
+  const handleSubmit = async () => {
+    await submitSurvey({
+      name: name,
+      product: value,
+      overallSatisfaction: overallRating,
+      foodQualityRate: foodRating,
+      foodQualityQ1,
+      foodQualityQ2,
+      serviceExperience: serviceRating,
+      serviceExperienceQ1: serviceQ1,
+      recommendation,
+      recommendationQ1,
+      LFO: LFORating,
+      LFOQ1,
+      LFOQ2,
+      LFOQ3,
+      feedbackMessage: feedback,
+    });
+  };
+
   return (
     <main className="flex min-h-screen flex-col items-center justify-between p-24">
       <div className="w-[30%] text-center">
         <h1 className="mb-4 font-semibold">reydel's customer survey app</h1>
         <div className="text-start flex flex-col">
-          <Input id="name" placeholder="Name" />
+          <Input
+            onChange={(e) => setName(e.target.value)}
+            id="name"
+            placeholder="Name"
+          />
           <Label className="text-gray-400 ml-2 mt-2" htmlFor="name">
             Optional
           </Label>
@@ -105,24 +156,59 @@ export default function Home() {
           </div>
 
           {/*overall here */}
-          <Overall value={value} />
+          <Overall
+            overallRating={overallRating}
+            setOverallRating={setOverallRating}
+            value={value}
+          />
           {/* food quality  */}
-          <FoodQuality value={value} />
+          <FoodQuality
+            foodRating={foodRating}
+            setFoodRating={setFoodRating}
+            foodQualityQ1={foodQualityQ1}
+            setFoodQualityQ1={setFoodQualityQ1}
+            foodQualityQ2={foodQualityQ2}
+            setFoodQualityQ2={setFoodQualityQ2}
+            value={value}
+          />
 
           {/* Service Experience:  */}
-          <ServiceExperience value={value} />
+          <ServiceExperience
+            serviceRating={serviceRating}
+            setServiceRating={setServiceRating}
+            serviceQ1={serviceQ1}
+            setServiceQ1={setServiceQ1}
+          />
 
           {/* Recommendation */}
-          <Recommendation value={value} />
+          <Recommendation
+            recommendation={recommendation}
+            setRecommendation={setRecommendation}
+            recommendationQ1={recommendationQ1}
+            setRecommendationQ1={setRecommendationQ1}
+            value={value}
+          />
 
           {/* Loyalty and Future Orders:  */}
 
-          <LoyaltyFutureOrders value={value} />
+          <LoyaltyFutureOrders
+            LFORating={LFORating}
+            setLFORating={setLFORating}
+            LFOQ1={LFOQ1}
+            setLFOQ1={setLFOQ1}
+            LFOQ2={LFOQ2}
+            setLFOQ2={setLFOQ2}
+            LFOQ3={LFOQ3}
+            setLFOQ3={setLFOQ3}
+            value={value}
+          />
 
           {/* additional:  */}
-          <Additional value={value} />
+          <Additional setFeedback={setFeedback} value={value} />
         </div>
-        <Button className="mt-2">Submit</Button>
+        <Button onClick={handleSubmit} className="mt-2">
+          Submit
+        </Button>
       </div>
     </main>
   );

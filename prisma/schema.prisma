@@ -20,7 +20,7 @@ model Feedback{
   foodQualityQ2 String?
   serviceExperience Int
   serviceExperienceQ1 String?
-  recommendation String
+  recommendation Boolean
   recommendationQ1 String?
   LFO Int
   LFOQ1 String?

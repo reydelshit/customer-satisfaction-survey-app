@@ -1,7 +1,15 @@
 import { Label } from '@/components/ui/label';
 import { Input } from '@/components/ui/input';
 
-export default function Overall({ value }: { value: string }) {
+export default function Overall({
+  overallRating,
+  setOverallRating,
+  value,
+}: {
+  overallRating: number;
+  setOverallRating: (value: number) => void;
+  value: string;
+}) {
   return (
     <div className="mt-4">
       <h1 className="mb-2">Overall Satisfaction:</h1>
@@ -13,7 +21,13 @@ export default function Overall({ value }: { value: string }) {
       <Label className="text-gray-400 ml-2" htmlFor="services">
         (1 = Very Poor, 5 = Average, 10 = Excellent)
       </Label>
-      <Input id="scale" placeholder="0" />
+      <Input
+        type="number"
+        max={10}
+        onChange={(e) => setOverallRating(Number(e.target.value))}
+        id="scale"
+        placeholder="0"
+      />
     </div>
   );
 }

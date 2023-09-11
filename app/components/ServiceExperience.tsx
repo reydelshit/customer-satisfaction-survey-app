@@ -1,7 +1,17 @@
 import { Label } from '@/components/ui/label';
 import { Input } from '@/components/ui/input';
 
-export default function ServiceExperience({ value }: { value: string }) {
+export default function ServiceExperience({
+  serviceRating,
+  setServiceRating,
+  serviceQ1,
+  setServiceQ1,
+}: {
+  serviceRating: number;
+  setServiceRating: (value: number) => void;
+  serviceQ1: string;
+  setServiceQ1: (value: string) => void;
+}) {
   return (
     <div className="mt-4">
       <h1 className="mb-2">Service Experience:</h1>
@@ -14,7 +24,11 @@ export default function ServiceExperience({ value }: { value: string }) {
           (1 = Very Poor, 5 = Average, 10 = Excellent)
         </Label>
 
-        <Input id="services" placeholder="0" />
+        <Input
+          onChange={(e) => setServiceRating(Number(e.target.value))}
+          id="services"
+          placeholder="0"
+        />
       </div>
 
       <div className="mt-2">
@@ -22,7 +36,11 @@ export default function ServiceExperience({ value }: { value: string }) {
           Were any special dietary requests or preferences (e.g., allergies,
           vegetarian, vegan) accommodated to your satisfaction?
         </Label>
-        <Input id="quality1" placeholder="Enter your answer here" />
+        <Input
+          onChange={(e) => setServiceQ1(e.target.value)}
+          id="quality1"
+          placeholder="Enter your answer here"
+        />
       </div>
     </div>
   );

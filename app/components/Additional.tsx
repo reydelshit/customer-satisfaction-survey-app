@@ -2,7 +2,13 @@ import { Label } from '@/components/ui/label';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 
-export default function Additional({ value }: { value: string }) {
+export default function Additional({
+  setFeedback,
+  value,
+}: {
+  setFeedback: (value: string) => void;
+  value: string;
+}) {
   return (
     <div className="mt-4">
       <h1 className="mb-2">Additional:</h1>
@@ -13,7 +19,11 @@ export default function Additional({ value }: { value: string }) {
           improvement? (Open-ended)
         </Label>
         <br />
-        <Textarea className="mt-4" placeholder="Type your feedback here." />
+        <Textarea
+          onChange={(e) => setFeedback(e.target.value)}
+          className="mt-4"
+          placeholder="Type your feedback here."
+        />
       </div>
     </div>
   );
