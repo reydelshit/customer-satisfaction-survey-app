@@ -1,113 +1,263 @@
-import Image from 'next/image'
+'use client';
+
+import { Input } from '@/components/ui/input';
+import { cn } from '@/lib/utils';
+import { Label } from '@/components/ui/label';
+import {
+  Command,
+  CommandEmpty,
+  CommandGroup,
+  CommandInput,
+  CommandItem,
+} from '@/components/ui/command';
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from '@/components/ui/popover';
+import { Textarea } from '@/components/ui/textarea';
+import { Button } from '@/components/ui/button';
+import { Checkbox } from '@/components/ui/checkbox';
+import { useState } from 'react';
 
 export default function Home() {
+  const [open, setOpen] = useState(false);
+  const [value, setValue] = useState('');
+
+  const frameworks = [
+    {
+      value: 'cocomelon',
+      label: 'Cocomelon',
+    },
+    {
+      value: 'mango',
+      label: 'Mango',
+    },
+  ];
+
   return (
     <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <div className="z-10 max-w-5xl w-full items-center justify-between font-mono text-sm lg:flex">
-        <p className="fixed left-0 top-0 flex w-full justify-center border-b border-gray-300 bg-gradient-to-b from-zinc-200 pb-6 pt-8 backdrop-blur-2xl dark:border-neutral-800 dark:bg-zinc-800/30 dark:from-inherit lg:static lg:w-auto  lg:rounded-xl lg:border lg:bg-gray-200 lg:p-4 lg:dark:bg-zinc-800/30">
-          Get started by editing&nbsp;
-          <code className="font-mono font-bold">app/page.tsx</code>
-        </p>
-        <div className="fixed bottom-0 left-0 flex h-48 w-full items-end justify-center bg-gradient-to-t from-white via-white dark:from-black dark:via-black lg:static lg:h-auto lg:w-auto lg:bg-none">
-          <a
-            className="pointer-events-none flex place-items-center gap-2 p-8 lg:pointer-events-auto lg:p-0"
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            By{' '}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className="dark:invert"
-              width={100}
-              height={24}
-              priority
-            />
-          </a>
+      <div className="w-[30%] text-center">
+        <h1 className="mb-4 font-semibold">reydel's customer survey app</h1>
+        <div className="text-start flex flex-col">
+          <Input id="name" placeholder="Name" />
+          <Label className="text-gray-400 ml-2 mt-2" htmlFor="name">
+            Optional
+          </Label>
+
+          <div>
+            <Popover open={open} onOpenChange={setOpen}>
+              <PopoverTrigger asChild>
+                <Button
+                  variant="outline"
+                  role="combobox"
+                  aria-expanded={open}
+                  className="w-full mt-5 justify-between"
+                >
+                  {value
+                    ? frameworks.find((framework) => framework.value === value)
+                        ?.label
+                    : 'Select services...'}
+                  <span>↓</span>
+                </Button>
+              </PopoverTrigger>
+              <PopoverContent className="w-full p-0">
+                <Command>
+                  <CommandInput
+                    placeholder="Search services..."
+                    className="h-9"
+                  />
+                  <CommandEmpty>No services found.</CommandEmpty>
+                  <CommandGroup>
+                    {frameworks.map((framework) => (
+                      <CommandItem
+                        key={framework.value}
+                        onSelect={(currentValue) => {
+                          setValue(currentValue === value ? '' : currentValue);
+                          setOpen(false);
+                        }}
+                      >
+                        {framework.label}
+                        <span
+                          className={cn(
+                            'ml-auto h-4 w-4',
+                            value === framework.value
+                              ? 'opacity-100'
+                              : 'opacity-0',
+                          )}
+                        ></span>
+                      </CommandItem>
+                    ))}
+                  </CommandGroup>
+                </Command>
+              </PopoverContent>
+            </Popover>
+
+            <Label className="text-gray-400 ml-2" htmlFor="services">
+              Food services offered
+            </Label>
+          </div>
+
+          {/* star rating here */}
+
+          <div className="mt-4">
+            <h1 className="mb-2">Overall Satisfaction:</h1>
+            <Label className=" ml-2" htmlFor="scale">
+              On a scale of 1 to 10, how satisfied are you with the{' '}
+              <span className="font-bold">{value}</span> ?
+            </Label>
+            <br />
+            <Label className="text-gray-400 ml-2" htmlFor="services">
+              (1 = Very Poor, 5 = Average, 10 = Excellent)
+            </Label>
+            <Input id="scale" placeholder="0" />
+          </div>
+
+          {/* food quality  */}
+          <div className="mt-4">
+            <h1 className="mb-2">Food Quality:</h1>
+            <div>
+              <Label htmlFor="services">
+                How would you rate the taste and quality of the{' '}
+                <span className="font-bold">{value}</span> ?
+              </Label>
+              <br />
+              <Label className="text-gray-400 ml-2" htmlFor="services">
+                (1 = Very Poor, 5 = Average, 10 = Excellent)
+              </Label>
+
+              <Input id="services" placeholder="0" />
+            </div>
+
+            <div className="mt-2">
+              <Label htmlFor="quality1">
+                Were there any specific flavors, ingredients, or aspects of the{' '}
+                <span className="font-bold">{value}</span> that you particularly
+                liked or disliked? (Open-ended)
+              </Label>
+              <Input id="quality1" placeholder="Enter your answer here" />
+            </div>
+
+            <div className="mt-2">
+              <Label htmlFor="quality1">
+                Did the <span className="font-bold">{value}</span> meet your
+                expectations in terms of taste and presentation?
+              </Label>
+              <Input id="quality1" placeholder="Enter your answer here" />
+            </div>
+          </div>
+
+          {/* Service Experience:  */}
+          <div className="mt-4">
+            <h1 className="mb-2">Service Experience:</h1>
+            <div>
+              <Label htmlFor="services">
+                How would you rate the speed and efficiency of our food service?
+              </Label>
+              <br />
+              <Label className="text-gray-400 ml-2" htmlFor="services">
+                (1 = Very Poor, 5 = Average, 10 = Excellent)
+              </Label>
+
+              <Input id="services" placeholder="0" />
+            </div>
+
+            <div className="mt-2">
+              <Label htmlFor="quality1">
+                Were any special dietary requests or preferences (e.g.,
+                allergies, vegetarian, vegan) accommodated to your satisfaction?
+              </Label>
+              <Input id="quality1" placeholder="Enter your answer here" />
+            </div>
+          </div>
+
+          {/* Recommendation */}
+          <div className="mt-4">
+            <h1 className="mb-2">Recommendation:</h1>
+            <div>
+              <Label htmlFor="services">
+                Would you recommend the{' '}
+                <span className="font-bold">{value}</span> to others?
+              </Label>
+              <br />
+
+              <div className="flex gap-4">
+                <div className="flex items-center gap-2">
+                  <Checkbox />
+                  <Label htmlFor="recom">yes</Label>
+                </div>
+
+                <div className="flex items-center gap-2">
+                  <Checkbox />
+                  <Label htmlFor="recom">no</Label>
+                </div>
+              </div>
+            </div>
+
+            <div className="mt-2">
+              <Label htmlFor="quality1">
+                What improvements or changes to the{' '}
+                <span className="font-bold">{value} </span>
+                would make you more likely to recommend it?
+              </Label>
+              <Input id="quality1" placeholder="Enter your answer here" />
+            </div>
+          </div>
+
+          {/* Loyalty and Future Orders:  */}
+          <div className="mt-4">
+            <h1 className="mb-2">Loyalty and Future Orders:</h1>
+            <div>
+              <Label htmlFor="services">
+                How likely are you to order the{' '}
+                <span className="font-bold">{value}</span> from us again in the
+                future?
+              </Label>
+              <br />
+              <Label className="text-gray-400 ml-2" htmlFor="services">
+                (1 = Very Poor, 5 = Average, 10 = Excellent)
+              </Label>
+
+              <Input id="services" placeholder="0" />
+            </div>
+
+            <div className="mt-2">
+              <Label htmlFor="quality1">
+                If you are considering trying a different food service, what
+                would be the primary reason?
+              </Label>
+              <Input id="quality1" placeholder="Enter your answer here" />
+            </div>
+
+            <div className="mt-2">
+              <Label htmlFor="quality1">
+                (Optional) Can you provide some basic demographic information to
+                help us better understand your feedback? (e.g., age, gender)
+              </Label>
+              <Input id="quality1" placeholder="age" />
+              <Input className="mt-2" id="quality1" placeholder="gender" />
+            </div>
+          </div>
+
+          {/* Loyalty and Future Orders:  */}
+          <div className="mt-4">
+            <h1 className="mb-2">Loyalty and Future Orders:</h1>
+            <div>
+              <Label htmlFor="services">
+                Is there anything else you'd like to share about your experience
+                with the <span className="font-bold">{value}</span> or
+                suggestions for improvement? (Open-ended)
+              </Label>
+              <br />
+              <Textarea
+                className="mt-4"
+                placeholder="Type your feedback here."
+              />
+            </div>
+          </div>
         </div>
-      </div>
-
-      <div className="relative flex place-items-center before:absolute before:h-[300px] before:w-[480px] before:-translate-x-1/2 before:rounded-full before:bg-gradient-radial before:from-white before:to-transparent before:blur-2xl before:content-[''] after:absolute after:-z-20 after:h-[180px] after:w-[240px] after:translate-x-1/3 after:bg-gradient-conic after:from-sky-200 after:via-blue-200 after:blur-2xl after:content-[''] before:dark:bg-gradient-to-br before:dark:from-transparent before:dark:to-blue-700 before:dark:opacity-10 after:dark:from-sky-900 after:dark:via-[#0141ff] after:dark:opacity-40 before:lg:h-[360px] z-[-1]">
-        <Image
-          className="relative dark:drop-shadow-[0_0_0.3rem_#ffffff70] dark:invert"
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
-        />
-      </div>
-
-      <div className="mb-32 grid text-center lg:max-w-5xl lg:w-full lg:mb-0 lg:grid-cols-4 lg:text-left">
-        <a
-          href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Docs{' '}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Find in-depth information about Next.js features and API.
-          </p>
-        </a>
-
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Learn{' '}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Learn about Next.js in an interactive course with&nbsp;quizzes!
-          </p>
-        </a>
-
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Templates{' '}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Explore the Next.js 13 playground.
-          </p>
-        </a>
-
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Deploy{' '}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
+        <Button className="mt-2">Submit</Button>
       </div>
     </main>
-  )
+  );
 }
