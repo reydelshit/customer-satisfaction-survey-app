@@ -1,0 +1,32 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Feedback{
+  id          Int      @id @default(autoincrement())
+  name        String
+  product     String
+  overallSatisfaction Int
+  foodQualityRate Int
+  foodQualityQ1 String?
+  foodQualityQ2 String?
+  serviceExperience Int
+  serviceExperienceQ1 String?
+  recommendation String
+  recommendationQ1 String?
+  LFO Int
+  LFOQ1 String?
+  LFOQ2 String?
+  LFOQ3 String?
+  feedbackMessage String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}

@@ -19,6 +19,12 @@ import { Textarea } from '@/components/ui/textarea';
 import { Button } from '@/components/ui/button';
 import { Checkbox } from '@/components/ui/checkbox';
 import { useState } from 'react';
+import FoodQuality from './components/FoodQuality';
+import Overall from './components/Overall';
+import ServiceExperience from './components/ServiceExperience';
+import LoyaltyFutureOrders from './components/LoyaltyFutureOrders';
+import Recommendation from './components/Recommendation';
+import Additional from './components/Additional';
 
 export default function Home() {
   const [open, setOpen] = useState(false);
@@ -61,7 +67,7 @@ export default function Home() {
                   <span>↓</span>
                 </Button>
               </PopoverTrigger>
-              <PopoverContent className="w-full p-0">
+              <PopoverContent className="w-[30rem] p-0">
                 <Command>
                   <CommandInput
                     placeholder="Search services..."
@@ -98,163 +104,23 @@ export default function Home() {
             </Label>
           </div>
 
-          {/* star rating here */}
-
-          <div className="mt-4">
-            <h1 className="mb-2">Overall Satisfaction:</h1>
-            <Label className=" ml-2" htmlFor="scale">
-              On a scale of 1 to 10, how satisfied are you with the{' '}
-              <span className="font-bold">{value}</span> ?
-            </Label>
-            <br />
-            <Label className="text-gray-400 ml-2" htmlFor="services">
-              (1 = Very Poor, 5 = Average, 10 = Excellent)
-            </Label>
-            <Input id="scale" placeholder="0" />
-          </div>
-
+          {/*overall here */}
+          <Overall value={value} />
           {/* food quality  */}
-          <div className="mt-4">
-            <h1 className="mb-2">Food Quality:</h1>
-            <div>
-              <Label htmlFor="services">
-                How would you rate the taste and quality of the{' '}
-                <span className="font-bold">{value}</span> ?
-              </Label>
-              <br />
-              <Label className="text-gray-400 ml-2" htmlFor="services">
-                (1 = Very Poor, 5 = Average, 10 = Excellent)
-              </Label>
-
-              <Input id="services" placeholder="0" />
-            </div>
-
-            <div className="mt-2">
-              <Label htmlFor="quality1">
-                Were there any specific flavors, ingredients, or aspects of the{' '}
-                <span className="font-bold">{value}</span> that you particularly
-                liked or disliked? (Open-ended)
-              </Label>
-              <Input id="quality1" placeholder="Enter your answer here" />
-            </div>
-
-            <div className="mt-2">
-              <Label htmlFor="quality1">
-                Did the <span className="font-bold">{value}</span> meet your
-                expectations in terms of taste and presentation?
-              </Label>
-              <Input id="quality1" placeholder="Enter your answer here" />
-            </div>
-          </div>
+          <FoodQuality value={value} />
 
           {/* Service Experience:  */}
-          <div className="mt-4">
-            <h1 className="mb-2">Service Experience:</h1>
-            <div>
-              <Label htmlFor="services">
-                How would you rate the speed and efficiency of our food service?
-              </Label>
-              <br />
-              <Label className="text-gray-400 ml-2" htmlFor="services">
-                (1 = Very Poor, 5 = Average, 10 = Excellent)
-              </Label>
-
-              <Input id="services" placeholder="0" />
-            </div>
-
-            <div className="mt-2">
-              <Label htmlFor="quality1">
-                Were any special dietary requests or preferences (e.g.,
-                allergies, vegetarian, vegan) accommodated to your satisfaction?
-              </Label>
-              <Input id="quality1" placeholder="Enter your answer here" />
-            </div>
-          </div>
+          <ServiceExperience value={value} />
 
           {/* Recommendation */}
-          <div className="mt-4">
-            <h1 className="mb-2">Recommendation:</h1>
-            <div>
-              <Label htmlFor="services">
-                Would you recommend the{' '}
-                <span className="font-bold">{value}</span> to others?
-              </Label>
-              <br />
-
-              <div className="flex gap-4">
-                <div className="flex items-center gap-2">
-                  <Checkbox />
-                  <Label htmlFor="recom">yes</Label>
-                </div>
-
-                <div className="flex items-center gap-2">
-                  <Checkbox />
-                  <Label htmlFor="recom">no</Label>
-                </div>
-              </div>
-            </div>
-
-            <div className="mt-2">
-              <Label htmlFor="quality1">
-                What improvements or changes to the{' '}
-                <span className="font-bold">{value} </span>
-                would make you more likely to recommend it?
-              </Label>
-              <Input id="quality1" placeholder="Enter your answer here" />
-            </div>
-          </div>
+          <Recommendation value={value} />
 
           {/* Loyalty and Future Orders:  */}
-          <div className="mt-4">
-            <h1 className="mb-2">Loyalty and Future Orders:</h1>
-            <div>
-              <Label htmlFor="services">
-                How likely are you to order the{' '}
-                <span className="font-bold">{value}</span> from us again in the
-                future?
-              </Label>
-              <br />
-              <Label className="text-gray-400 ml-2" htmlFor="services">
-                (1 = Very Poor, 5 = Average, 10 = Excellent)
-              </Label>
 
-              <Input id="services" placeholder="0" />
-            </div>
+          <LoyaltyFutureOrders value={value} />
 
-            <div className="mt-2">
-              <Label htmlFor="quality1">
-                If you are considering trying a different food service, what
-                would be the primary reason?
-              </Label>
-              <Input id="quality1" placeholder="Enter your answer here" />
-            </div>
-
-            <div className="mt-2">
-              <Label htmlFor="quality1">
-                (Optional) Can you provide some basic demographic information to
-                help us better understand your feedback? (e.g., age, gender)
-              </Label>
-              <Input id="quality1" placeholder="age" />
-              <Input className="mt-2" id="quality1" placeholder="gender" />
-            </div>
-          </div>
-
-          {/* Loyalty and Future Orders:  */}
-          <div className="mt-4">
-            <h1 className="mb-2">Loyalty and Future Orders:</h1>
-            <div>
-              <Label htmlFor="services">
-                Is there anything else you'd like to share about your experience
-                with the <span className="font-bold">{value}</span> or
-                suggestions for improvement? (Open-ended)
-              </Label>
-              <br />
-              <Textarea
-                className="mt-4"
-                placeholder="Type your feedback here."
-              />
-            </div>
-          </div>
+          {/* additional:  */}
+          <Additional value={value} />
         </div>
         <Button className="mt-2">Submit</Button>
       </div>
