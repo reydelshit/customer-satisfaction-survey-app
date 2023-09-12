@@ -9,7 +9,7 @@ CREATE TABLE "Feedback" (
     "foodQualityQ2" TEXT,
     "serviceExperience" INTEGER NOT NULL,
     "serviceExperienceQ1" TEXT,
-    "recommendation" TEXT NOT NULL,
+    "recommendation" BOOLEAN NOT NULL,
     "recommendationQ1" TEXT,
     "LFO" INTEGER NOT NULL,
     "LFOQ1" TEXT,

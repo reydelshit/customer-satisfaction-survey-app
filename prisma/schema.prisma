@@ -9,7 +9,6 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
-
 model Feedback{
   id          Int      @id @default(autoincrement())
   name        String
@@ -30,4 +29,4 @@ model Feedback{
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 }
-                    
+     
