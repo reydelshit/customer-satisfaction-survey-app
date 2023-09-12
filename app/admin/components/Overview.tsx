@@ -17,6 +17,7 @@ import ResponseRate from './ResponseRate';
 import PositiveRate from './PositiveRate';
 import TodayResponse from './TodayResponse';
 import LatestResponse from './LatestResponse';
+import Listing from './Listing';
 
 export default function Overview() {
   return (
@@ -42,7 +43,9 @@ export default function Overview() {
           </div>
         </div>
       </TabsContent>
-      <TabsContent value="listing">Change your password here.</TabsContent>
+      <TabsContent value="listing">
+        <Listing />
+      </TabsContent>
     </Tabs>
   );
 }
