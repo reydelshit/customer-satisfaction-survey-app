@@ -22,7 +22,7 @@ export default function ResponseRate() {
         setTotalSurvey(total);
       }
     } catch (error) {
-      console.log(error);
+      console.log('response rate', error);
     }
   }
 

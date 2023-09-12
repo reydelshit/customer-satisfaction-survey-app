@@ -22,7 +22,7 @@ export default function TotalSurvey() {
         setTotalSurvey(total);
       }
     } catch (error) {
-      console.log(error);
+      console.log('total', error);
     }
   }
 

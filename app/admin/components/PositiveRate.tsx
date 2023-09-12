@@ -27,7 +27,7 @@ export default function PositiveRate() {
         setTotalPositive(totalPositiveResponse.length);
       }
     } catch (error) {
-      console.log(error);
+      console.log('positive', error);
     }
   }
 

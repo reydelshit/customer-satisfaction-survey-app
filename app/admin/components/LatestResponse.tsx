@@ -43,7 +43,7 @@ export default function LatestResponse() {
         setLatestResponse(latestRes);
       }
     } catch (error) {
-      console.log(error);
+      console.log('latest', error);
     }
   }
 

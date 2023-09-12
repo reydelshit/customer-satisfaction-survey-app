@@ -59,7 +59,7 @@ export default function Listing() {
         setLatestResponse(latestRes);
       }
     } catch (error) {
-      console.error('Error fetching data:', error);
+      console.error('listing', error);
     }
   }
 

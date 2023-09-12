@@ -31,7 +31,7 @@ export default function TodayResponse() {
         setTotalSurvey(totalSurveyToday.length);
       }
     } catch (error) {
-      console.log(error);
+      console.log('today', error);
     }
   }
 
