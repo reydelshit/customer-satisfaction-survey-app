@@ -64,16 +64,17 @@ export default function LatestResponse() {
           </TableRow>
         </TableHeader>
         <TableBody>
-          {latestResponse.slice(0, 10).map((survey) => (
-            <TableRow key={survey.id}>
-              <TableCell>{survey.product}</TableCell>
-              <TableCell>{survey.feedbackMessage}</TableCell>
+          {latestResponse &&
+            latestResponse.slice(0, 10).map((survey) => (
+              <TableRow key={survey.id}>
+                <TableCell>{survey.product}</TableCell>
+                <TableCell>{survey.feedbackMessage}</TableCell>
 
-              <TableCell className="text-right">
-                {survey.overallSatisfaction}/10
-              </TableCell>
-            </TableRow>
-          ))}
+                <TableCell className="text-right">
+                  {survey.overallSatisfaction}/10
+                </TableCell>
+              </TableRow>
+            ))}
         </TableBody>
       </Table>
     </div>
