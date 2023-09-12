@@ -28,7 +28,7 @@ export default function TotalSurvey() {
 
   useEffect(() => {
     fetchTotalSurvey();
-  }, []);
+  }, [totalSurvey]);
 
   return (
     <Card className="w-[25rem]">
