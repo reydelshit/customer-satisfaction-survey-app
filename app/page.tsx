@@ -189,8 +189,7 @@ export default function Home() {
             value={value}
           />
 
-          {/* Loyalty and Future Orders:  */}
-
+          {/* Loyalty and Future Orderrss:  */}
           <LoyaltyFutureOrders
             LFORating={LFORating}
             setLFORating={setLFORating}
