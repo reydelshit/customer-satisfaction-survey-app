@@ -61,7 +61,7 @@ export default function LatestResponse() {
         </TableHeader>
         <TableBody>
           {latestResponse.slice(0, 10).map((survey) => (
-            <TableRow>
+            <TableRow key={survey.id}>
               <TableCell>{survey.product}</TableCell>
               <TableCell>{survey.feedbackMessage}</TableCell>
 

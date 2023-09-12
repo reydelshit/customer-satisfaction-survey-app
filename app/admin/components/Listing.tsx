@@ -106,7 +106,7 @@ export default function Listing() {
           {latestResponse
             .filter((survey) => survey.id === holdTheId)
             .map((survey) => (
-              <div className="flex flex-col p-2">
+              <div key={survey.id} className="flex flex-col p-2">
                 <h1 className="text-center font-bold text-2xl my-4">
                   Respondent Number {survey.id}
                 </h1>
