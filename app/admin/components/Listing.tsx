@@ -84,6 +84,7 @@ export default function Listing() {
           <TableBody>
             {latestResponse.slice(0, 10).map((survey) => (
               <TableRow
+                key={survey.id}
                 onClick={() => handleViewDetails(survey.id)}
                 className="cursor-pointer"
               >
