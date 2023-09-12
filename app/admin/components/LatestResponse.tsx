@@ -49,7 +49,7 @@ export default function LatestResponse() {
 
   useEffect(() => {
     fetchTotalSurvey();
-  }, [latestResponse]);
+  }, []);
 
   return (
     <div className="w-[40%] p-8">

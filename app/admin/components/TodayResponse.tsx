@@ -37,7 +37,7 @@ export default function TodayResponse() {
 
   useEffect(() => {
     fetchTotalSurvey();
-  }, [totalSurvey]);
+  }, []);
 
   return (
     <Card className="w-[25rem]">

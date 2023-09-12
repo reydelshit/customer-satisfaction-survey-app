@@ -33,7 +33,7 @@ export default function PositiveRate() {
 
   useEffect(() => {
     fetchTotalSurvey();
-  }, [totalSurvey]);
+  }, []);
 
   return (
     <Card className="w-[25rem]">

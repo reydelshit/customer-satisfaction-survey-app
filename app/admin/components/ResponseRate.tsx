@@ -28,7 +28,7 @@ export default function ResponseRate() {
 
   useEffect(() => {
     fetchTotalSurvey();
-  }, [totalSurvey]);
+  }, []);
 
   return (
     <Card className="w-[25rem]">

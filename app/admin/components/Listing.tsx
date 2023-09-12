@@ -65,7 +65,7 @@ export default function Listing() {
 
   useEffect(() => {
     fetchTotalSurvey();
-  }, [latestResponse]);
+  }, []);
 
   const handleViewDetails = (id: number) => {
     setHoldTheId(id);
