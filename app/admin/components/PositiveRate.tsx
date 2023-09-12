@@ -16,14 +16,18 @@ export default function PositiveRate() {
   const [totalPositive, setTotalPositive] = useState(0);
 
   async function fetchTotalSurvey() {
-    const totalSurvey = await getAllSurvey();
-    if (totalSurvey) {
-      setTotalSurvey(totalSurvey.length);
+    try {
+      const totalSurvey = await getAllSurvey();
+      if (totalSurvey) {
+        setTotalSurvey(totalSurvey.length);
 
-      const totalPositiveResponse = totalSurvey.filter(
-        (survey) => survey.overallSatisfaction > 7,
-      );
-      setTotalPositive(totalPositiveResponse.length);
+        const totalPositiveResponse = totalSurvey.filter(
+          (survey) => survey.overallSatisfaction > 7,
+        );
+        setTotalPositive(totalPositiveResponse.length);
+      }
+    } catch (error) {
+      console.log(error);
     }
   }
 

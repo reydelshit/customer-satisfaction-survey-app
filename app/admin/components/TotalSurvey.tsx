@@ -15,10 +15,14 @@ export default function TotalSurvey() {
   const [totalSurvey, setTotalSurvey] = useState(0);
 
   async function fetchTotalSurvey() {
-    const totalSurvey = await getAllSurvey();
-    if (totalSurvey) {
-      const total = totalSurvey.length;
-      setTotalSurvey(total);
+    try {
+      const totalSurvey = await getAllSurvey();
+      if (totalSurvey) {
+        const total = totalSurvey.length;
+        setTotalSurvey(total);
+      }
+    } catch (error) {
+      console.log(error);
     }
   }
 

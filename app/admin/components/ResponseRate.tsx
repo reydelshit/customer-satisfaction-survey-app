@@ -15,10 +15,14 @@ export default function ResponseRate() {
   const potentialRespondents = 100;
 
   async function fetchTotalSurvey() {
-    const totalSurvey = await getAllSurvey();
-    if (totalSurvey) {
-      const total = totalSurvey.length;
-      setTotalSurvey(total);
+    try {
+      const totalSurvey = await getAllSurvey();
+      if (totalSurvey) {
+        const total = totalSurvey.length;
+        setTotalSurvey(total);
+      }
+    } catch (error) {
+      console.log(error);
     }
   }
 

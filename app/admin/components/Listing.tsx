@@ -53,9 +53,13 @@ export default function Listing() {
   const [decider, setDecider] = useState<boolean>(false);
 
   async function fetchTotalSurvey() {
-    const latestRes = await getAllSurvey();
-    if (latestRes) {
-      setLatestResponse(latestRes);
+    try {
+      const latestRes = await getAllSurvey();
+      if (latestRes) {
+        setLatestResponse(latestRes);
+      }
+    } catch (error) {
+      console.error('Error fetching data:', error);
     }
   }
 

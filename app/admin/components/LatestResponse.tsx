@@ -37,9 +37,13 @@ export default function LatestResponse() {
   const [latestResponse, setLatestResponse] = useState<Feedback[]>([]);
 
   async function fetchTotalSurvey() {
-    const latestRes = await getAllSurvey();
-    if (latestRes) {
-      setLatestResponse(latestRes);
+    try {
+      const latestRes = await getAllSurvey();
+      if (latestRes) {
+        setLatestResponse(latestRes);
+      }
+    } catch (error) {
+      console.log(error);
     }
   }
 

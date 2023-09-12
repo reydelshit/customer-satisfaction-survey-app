@@ -15,19 +15,23 @@ export default function TodayResponse() {
   const [totalSurvey, setTotalSurvey] = useState(0);
 
   async function fetchTotalSurvey() {
-    const totalSurvey = await getAllSurvey();
-    if (totalSurvey) {
-      const currentDate = new Date().toISOString().slice(0, 10);
+    try {
+      const totalSurvey = await getAllSurvey();
+      if (totalSurvey) {
+        const currentDate = new Date().toISOString().slice(0, 10);
 
-      const totalSurveyToday = totalSurvey.filter((survey) => {
-        // Convert the createdAt date (which is a string) to a Date object
-        const surveyDate = new Date(survey.createdAt)
-          .toISOString()
-          .slice(0, 10);
-        return surveyDate === currentDate;
-      });
+        const totalSurveyToday = totalSurvey.filter((survey) => {
+          // Convert the createdAt date (which is a string) to a Date object
+          const surveyDate = new Date(survey.createdAt)
+            .toISOString()
+            .slice(0, 10);
+          return surveyDate === currentDate;
+        });
 
-      setTotalSurvey(totalSurveyToday.length);
+        setTotalSurvey(totalSurveyToday.length);
+      }
+    } catch (error) {
+      console.log(error);
     }
   }
 
