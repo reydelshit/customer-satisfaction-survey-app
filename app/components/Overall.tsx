@@ -22,6 +22,7 @@ export default function Overall({
         (1 = Very Poor, 5 = Average, 10 = Excellent)
       </Label>
       <Input
+        value={overallRating.toString()}
         type="number"
         max={10}
         onChange={(e) => setOverallRating(Number(e.target.value))}

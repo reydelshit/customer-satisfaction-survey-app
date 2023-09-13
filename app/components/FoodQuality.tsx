@@ -32,6 +32,7 @@ export default function FoodQuality({
         </Label>
 
         <Input
+          value={foodRating.toString()}
           type="number"
           onChange={(e) => setFoodRating(Number(e.target.value))}
           id="services"
@@ -46,6 +47,7 @@ export default function FoodQuality({
           or disliked? (Open-ended)
         </Label>
         <Input
+          value={foodQualityQ1}
           onChange={(e) => setFoodQualityQ1(e.target.value)}
           id="quality1"
           placeholder="Enter your answer here"
@@ -58,6 +60,7 @@ export default function FoodQuality({
           expectations in terms of taste and presentation?
         </Label>
         <Input
+          value={foodQualityQ2}
           onChange={(e) => setFoodQualityQ2(e.target.value)}
           id="quality1"
           placeholder="Enter your answer here"

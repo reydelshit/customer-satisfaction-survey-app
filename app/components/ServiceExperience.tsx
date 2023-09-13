@@ -25,9 +25,10 @@ export default function ServiceExperience({
         </Label>
 
         <Input
+          value={serviceRating.toString()}
           onChange={(e) => setServiceRating(Number(e.target.value))}
           id="services"
-          placeholder="0"
+          type="number"
         />
       </div>
 
@@ -37,6 +38,7 @@ export default function ServiceExperience({
           vegetarian, vegan) accommodated to your satisfaction?
         </Label>
         <Input
+          value={serviceQ1}
           onChange={(e) => setServiceQ1(e.target.value)}
           id="quality1"
           placeholder="Enter your answer here"

@@ -10,6 +10,7 @@ import {
 } from '@/components/ui/card';
 import { getAllSurvey } from '../action/getTotalSurvey';
 import { useState, useEffect } from 'react';
+import { prisma } from '@/prisma/db';
 
 export default function TotalSurvey() {
   const [totalSurvey, setTotalSurvey] = useState(0);
@@ -37,7 +38,9 @@ export default function TotalSurvey() {
         <CardDescription>Total response from customers</CardDescription>
       </CardHeader>
       <CardContent>
-        <h1 className="text-3xl font-bold">{totalSurvey}</h1>
+        <h1 className="text-3xl font-bold">
+          {totalSurvey && totalSurvey ? totalSurvey : 0}
+        </h1>
       </CardContent>
     </Card>
   );

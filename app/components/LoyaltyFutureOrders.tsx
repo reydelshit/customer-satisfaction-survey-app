@@ -29,6 +29,7 @@ export default function LoyaltyFutureOrders({
         <Input
           type="number"
           max={10}
+          value={LFORating.toString()}
           onChange={(e) => setLFORating(Number(e.target.value))}
           id="services"
           placeholder="0"
@@ -41,6 +42,7 @@ export default function LoyaltyFutureOrders({
           the primary reason?
         </Label>
         <Input
+          value={LFOQ1}
           onChange={(e) => setLFOQ1(e.target.value)}
           id="quality1"
           placeholder="Enter your answer here"
@@ -52,12 +54,14 @@ export default function LoyaltyFutureOrders({
           us better understand your feedback? (e.g., age, gender)
         </Label>
         <Input
+          value={LFOQ2}
           onChange={(e) => setLFOQ2(e.target.value)}
           id="quality1"
           placeholder="age"
         />
         <Input
-          onChange={(e) => setLFOQ2(e.target.value)}
+          value={LFOQ3}
+          onChange={(e) => setLFOQ3(e.target.value)}
           className="mt-2"
           id="quality1"
           placeholder="gender"

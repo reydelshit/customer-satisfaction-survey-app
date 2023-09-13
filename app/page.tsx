@@ -3,6 +3,8 @@
 import { Input } from '@/components/ui/input';
 import { cn } from '@/lib/utils';
 import { Label } from '@/components/ui/label';
+import { Toaster } from '@/components/ui/toaster';
+import { useToast } from '@/components/ui/use-toast';
 import {
   Command,
   CommandEmpty,
@@ -57,6 +59,8 @@ export default function Home() {
   // Additional
   const [feedback, setFeedback] = useState('');
 
+  const { toast } = useToast();
+
   const frameworks = [
     {
       value: 'cocomelon',
@@ -67,6 +71,25 @@ export default function Home() {
       label: 'Mango',
     },
   ];
+
+  const clearState = () => {
+    setName('');
+    setOverallRating(0);
+    setFoodRating(0);
+    setFoodQualityQ1('');
+    setFoodQualityQ2('');
+    setServiceRating(0);
+    setServiceQ1('');
+    setRecommendation(true);
+    setRecommendationQ1('');
+    setLFORating(0);
+    setLFOQ1('');
+    setLFOQ2('');
+    setLFOQ3('');
+    setFeedback('');
+
+    console.log('clear state');
+  };
 
   const handleSubmit = async () => {
     await submitSurvey({
@@ -86,6 +109,28 @@ export default function Home() {
       LFOQ3,
       feedbackMessage: feedback,
     });
+
+    toast({
+      title: 'Survey submitted',
+      description: 'Thank you for your feedback!',
+    });
+
+    setName('');
+    setOverallRating(0);
+    setFoodRating(0);
+    setFoodQualityQ1('');
+    setFoodQualityQ2('');
+    setServiceRating(0);
+    setServiceQ1('');
+    setRecommendation(true);
+    setRecommendationQ1('');
+    setLFORating(0);
+    setLFOQ1('');
+    setLFOQ2('');
+    setLFOQ3('');
+    setFeedback('');
+
+    console.log('clear state');
   };
 
   return (
@@ -94,6 +139,7 @@ export default function Home() {
         <h1 className="mb-4 font-semibold">reydel's customer survey app</h1>
         <div className="text-start flex flex-col">
           <Input
+            value={name}
             onChange={(e) => setName(e.target.value)}
             id="name"
             placeholder="Name"
@@ -209,6 +255,8 @@ export default function Home() {
           Submit
         </Button>
       </div>
+
+      <Toaster />
     </main>
   );
 }

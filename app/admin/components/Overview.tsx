@@ -18,6 +18,7 @@ import PositiveRate from './PositiveRate';
 import TodayResponse from './TodayResponse';
 import LatestResponse from './LatestResponse';
 import Listing from './Listing';
+import { prisma } from '@/prisma/db';
 
 export default function Overview() {
   return (

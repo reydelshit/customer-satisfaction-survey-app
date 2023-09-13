@@ -60,6 +60,7 @@ export default function Recommendation({
           would make you more likely to recommend it?
         </Label>
         <Input
+          value={recommendationQ1}
           onChange={(e) => setRecommendationQ1(e.target.value)}
           id="quality1"
           placeholder="Enter your answer here"
