@@ -39,8 +39,13 @@ export default function LatestResponse() {
   async function fetchTotalSurvey() {
     try {
       const latestRes = await getAllSurvey();
-      if (latestRes) {
-        setLatestResponse(latestRes);
+      if (latestRes && latestRes.length > 0) {
+        const sortedResponse = latestRes.sort((a, b) => {
+          return (
+            new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+          );
+        });
+        setLatestResponse(sortedResponse);
       }
     } catch (error) {
       console.log('latest', error);
@@ -54,6 +59,7 @@ export default function LatestResponse() {
   return (
     <div className="w-[40%] p-8">
       <h1 className="font-bold mb-2">Latest Responses</h1>
+      <p>only shows 10</p>
       <Table className="w-full self-end border-2">
         <TableHeader>
           <TableRow>

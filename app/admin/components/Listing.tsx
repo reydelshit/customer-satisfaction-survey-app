@@ -9,6 +9,7 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table';
+import { Button } from '@/components/ui/button';
 
 import {
   Card,
@@ -25,7 +26,7 @@ import { Label } from '@/components/ui/label';
 import { Input } from '@/components/ui/input';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Textarea } from '@/components/ui/textarea';
-
+import { Progress } from '@/components/ui/progress';
 interface Feedback {
   id: number;
   name: string;
@@ -51,6 +52,14 @@ export default function Listing() {
   const [latestResponse, setLatestResponse] = useState<Feedback[]>([]);
   const [holdTheId, setHoldTheId] = useState<number>(0);
   const [decider, setDecider] = useState<boolean>(false);
+  const [analyzeDecider, setAnalyzeDecider] = useState<boolean>(false);
+  const [rating, setRating] = useState({
+    overallSatisfaction: 0,
+    foodQualityRate: 0,
+    serviceExperience: 0,
+  });
+
+  const [showLoadingContent, setShowLoadingContent] = useState(false);
 
   async function fetchTotalSurvey() {
     try {
@@ -70,6 +79,35 @@ export default function Listing() {
   const handleViewDetails = (id: number) => {
     setHoldTheId(id);
     setDecider(true);
+    setAnalyzeDecider(false);
+  };
+
+  const callGpt = async () => {
+    latestResponse
+      .filter((survey) => survey.id === holdTheId)
+      .map((survey) => {
+        setRating({
+          overallSatisfaction: survey.overallSatisfaction,
+          foodQualityRate: survey.foodQualityRate,
+          serviceExperience: survey.serviceExperience,
+        });
+      });
+
+    console.log(
+      rating.overallSatisfaction,
+      rating.foodQualityRate,
+      rating.serviceExperience,
+    );
+  };
+
+  const handleAnalyzeGpt = () => {
+    setAnalyzeDecider(true);
+    setShowLoadingContent(true);
+    const delay = 5000;
+    setTimeout(() => {
+      setShowLoadingContent(false);
+      callGpt();
+    }, delay);
   };
   return (
     <div className="flex flex-row p-8 justify-between gap-10">
@@ -87,7 +125,7 @@ export default function Listing() {
           </TableHeader>
           <TableBody>
             {latestResponse &&
-              latestResponse.slice(0, 10).map((survey) => (
+              latestResponse.map((survey) => (
                 <TableRow
                   key={survey.id}
                   onClick={() => handleViewDetails(survey.id)}
@@ -117,6 +155,31 @@ export default function Listing() {
                   <h1 className="text-center font-bold text-2xl my-4">
                     Respondent Number {survey.id}
                   </h1>
+
+                  <Button
+                    onClick={handleAnalyzeGpt}
+                    className="w-[8rem] self-end mb-10 mr-10"
+                  >
+                    Analyze
+                  </Button>
+
+                  {analyzeDecider && (
+                    <div className="  flex justify-center h-full w-full border-2 mb-4 rounded-md">
+                      {showLoadingContent ? (
+                        <div className="h-[15rem] flex flex-col justify-center items-center text-center">
+                          <div className="spinner"></div>
+                          <span className="mt-[2rem]">analyzing</span>
+                        </div>
+                      ) : (
+                        <div className="px-16 h-[15rem] flex justify-center">
+                          Overall: {rating.overallSatisfaction} Food Quality:{' '}
+                          {rating.foodQualityRate} Service Quality:{' '}
+                          {rating.serviceExperience}
+                        </div>
+                      )}
+                    </div>
+                  )}
+
                   <div className="flex gap-2 justify-center">
                     <Card className="w-[20rem]">
                       <CardHeader>
@@ -175,6 +238,7 @@ export default function Listing() {
                           value={survey.foodQualityRate}
                           id="services"
                           placeholder="0"
+                          readOnly
                         />
                       </div>
 
@@ -189,6 +253,7 @@ export default function Listing() {
                           value={survey.foodQualityQ1!}
                           id="quality1"
                           placeholder="Enter your answer here"
+                          readOnly
                         />
                       </div>
 
@@ -203,6 +268,7 @@ export default function Listing() {
                           value={survey.foodQualityQ2!}
                           id="quality1"
                           placeholder="Enter your answer here"
+                          readOnly
                         />
                       </div>
                     </div>
@@ -228,6 +294,7 @@ export default function Listing() {
                           value={survey.serviceExperience}
                           id="services"
                           placeholder="0"
+                          readOnly
                         />
                       </div>
 
@@ -241,6 +308,7 @@ export default function Listing() {
                           value={survey.serviceExperienceQ1!}
                           id="quality1"
                           placeholder="Enter your answer here"
+                          readOnly
                         />
                       </div>
                     </div>
@@ -288,6 +356,7 @@ export default function Listing() {
                           value={survey.recommendationQ1!}
                           id="quality1"
                           placeholder="Enter your answer here"
+                          readOnly
                         />
                       </div>
                     </div>
@@ -316,6 +385,7 @@ export default function Listing() {
                           value={survey.LFO}
                           id="services"
                           placeholder="0"
+                          readOnly
                         />
                       </div>
 
@@ -328,6 +398,7 @@ export default function Listing() {
                           value={survey.LFOQ1!}
                           id="quality1"
                           placeholder="Enter your answer here"
+                          readOnly
                         />
                       </div>
                       <div className="mt-2">
@@ -340,12 +411,14 @@ export default function Listing() {
                           value={survey.LFOQ2!}
                           id="quality1"
                           placeholder="age"
+                          readOnly
                         />
                         <Input
                           value={survey.LFOQ3!}
                           className="mt-2"
                           id="quality1"
                           placeholder="gender"
+                          readOnly
                         />
                       </div>
                     </div>
@@ -365,6 +438,7 @@ export default function Listing() {
                           value={survey.feedbackMessage!}
                           className="mt-4"
                           placeholder="Type your feedback here."
+                          readOnly
                         />
                       </div>
                     </div>
