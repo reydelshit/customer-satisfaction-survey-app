@@ -111,37 +111,46 @@ export default function Listing() {
   return (
     <div className="flex flex-row p-8 justify-between gap-10">
       <div className="w-[30%]">
-        <Table className="w-full self-end border-2">
-          <TableHeader>
-            <TableRow>
-              <TableHead>ID</TableHead>
+        {latestResponse && latestResponse.length > 0 ? (
+          <Table className="w-full self-end border-2">
+            <TableHeader>
+              <TableRow>
+                <TableHead>ID</TableHead>
 
-              <TableHead>Product</TableHead>
-              <TableHead>Feedback</TableHead>
+                <TableHead>Product</TableHead>
+                <TableHead>Feedback</TableHead>
 
-              <TableHead className="text-right">Overall Rating</TableHead>
-            </TableRow>
-          </TableHeader>
-          <TableBody>
-            {latestResponse &&
-              latestResponse.map((survey) => (
-                <TableRow
-                  key={survey.id}
-                  onClick={() => handleViewDetails(survey.id)}
-                  className="cursor-pointer"
-                >
-                  <TableCell>{survey.id}</TableCell>
+                <TableHead className="text-right">Overall Rating</TableHead>
+              </TableRow>
+            </TableHeader>
+            <TableBody className="h-[30rem] border-2 border-orange-300">
+              {latestResponse &&
+                latestResponse.length > 0 &&
+                latestResponse.map((survey) => (
+                  <TableRow
+                    key={survey.id}
+                    onClick={() => handleViewDetails(survey.id)}
+                    className="cursor-pointer"
+                  >
+                    <TableCell>{survey.id}</TableCell>
 
-                  <TableCell>{survey.product}</TableCell>
-                  <TableCell>{survey.feedbackMessage?.slice(0, 50)}</TableCell>
+                    <TableCell>{survey.product}</TableCell>
+                    <TableCell>
+                      {survey.feedbackMessage?.slice(0, 50)}
+                    </TableCell>
 
-                  <TableCell className="text-right">
-                    {survey.overallSatisfaction}/10
-                  </TableCell>
-                </TableRow>
-              ))}
-          </TableBody>
-        </Table>
+                    <TableCell className="text-right">
+                      {survey.overallSatisfaction}/10
+                    </TableCell>
+                  </TableRow>
+                ))}
+            </TableBody>
+          </Table>
+        ) : (
+          <div className="h-[30rem] grid place-items-center place-content-center border-2 ">
+            <div className="spinner"></div>
+          </div>
+        )}
       </div>
 
       {decider && (
