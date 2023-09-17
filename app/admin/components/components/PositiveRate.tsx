@@ -1,4 +1,5 @@
 'use client';
+
 import {
   Card,
   CardContent,
@@ -7,22 +8,26 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card';
+import { getAllSurvey } from '../../action/getTotalSurvey';
 import { useState, useEffect } from 'react';
-import { getAllSurvey } from '../action/getTotalSurvey';
 
-export default function ResponseRate() {
+export default function PositiveRate() {
   const [totalSurvey, setTotalSurvey] = useState(0);
-  const potentialRespondents = 100;
+  const [totalPositive, setTotalPositive] = useState(0);
 
   async function fetchTotalSurvey() {
     try {
       const totalSurvey = await getAllSurvey();
       if (totalSurvey) {
-        const total = totalSurvey.length;
-        setTotalSurvey(total);
+        setTotalSurvey(totalSurvey.length);
+
+        const totalPositiveResponse = totalSurvey.filter(
+          (survey) => survey.overallSatisfaction > 7,
+        );
+        setTotalPositive(totalPositiveResponse.length);
       }
     } catch (error) {
-      console.log('response rate', error);
+      console.log('positive', error);
     }
   }
 
@@ -33,12 +38,14 @@ export default function ResponseRate() {
   return (
     <Card className="w-[25rem]">
       <CardHeader>
-        <CardTitle>Response Rate</CardTitle>
-        <CardDescription>Based on potential respondents</CardDescription>
+        <CardTitle>Positive Responses Rate</CardTitle>
+        <CardDescription>
+          Threshold to be considred positive is greater than 7
+        </CardDescription>
       </CardHeader>
       <CardContent>
         <h1 className="text-3xl font-bold">
-          {(totalSurvey / potentialRespondents) * 100}%
+          {(totalPositive / totalSurvey) * 100}%
         </h1>
       </CardContent>
     </Card>

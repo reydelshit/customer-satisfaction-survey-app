@@ -8,7 +8,7 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card';
-import { getAllSurvey } from '../action/getTotalSurvey';
+import { getAllSurvey } from '../../action/getTotalSurvey';
 import { useState, useEffect } from 'react';
 
 export default function TodayResponse() {

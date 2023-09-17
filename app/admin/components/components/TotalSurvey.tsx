@@ -8,26 +8,22 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card';
-import { getAllSurvey } from '../action/getTotalSurvey';
+import { getAllSurvey } from '../../action/getTotalSurvey';
 import { useState, useEffect } from 'react';
+import { prisma } from '@/prisma/db';
 
-export default function PositiveRate() {
+export default function TotalSurvey() {
   const [totalSurvey, setTotalSurvey] = useState(0);
-  const [totalPositive, setTotalPositive] = useState(0);
 
   async function fetchTotalSurvey() {
     try {
       const totalSurvey = await getAllSurvey();
       if (totalSurvey) {
-        setTotalSurvey(totalSurvey.length);
-
-        const totalPositiveResponse = totalSurvey.filter(
-          (survey) => survey.overallSatisfaction > 7,
-        );
-        setTotalPositive(totalPositiveResponse.length);
+        const total = totalSurvey.length;
+        setTotalSurvey(total);
       }
     } catch (error) {
-      console.log('positive', error);
+      console.log('total', error);
     }
   }
 
@@ -38,14 +34,12 @@ export default function PositiveRate() {
   return (
     <Card className="w-[25rem]">
       <CardHeader>
-        <CardTitle>Positive Responses Rate</CardTitle>
-        <CardDescription>
-          Threshold to be considred positive is greater than 7
-        </CardDescription>
+        <CardTitle>Total Survey Submitted</CardTitle>
+        <CardDescription>Total response from customers</CardDescription>
       </CardHeader>
       <CardContent>
         <h1 className="text-3xl font-bold">
-          {(totalPositive / totalSurvey) * 100}%
+          {totalSurvey && totalSurvey ? totalSurvey : 0}
         </h1>
       </CardContent>
     </Card>

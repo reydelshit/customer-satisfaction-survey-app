@@ -9,7 +9,7 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table';
-import { getAllSurvey } from '../action/getTotalSurvey';
+import { getAllSurvey } from '../../action/getTotalSurvey';
 import { useState, useEffect } from 'react';
 
 interface Feedback {

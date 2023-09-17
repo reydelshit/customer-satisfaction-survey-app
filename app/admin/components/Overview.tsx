@@ -11,14 +11,15 @@ import {
 import { Bar, BarChart, ResponsiveContainer, XAxis, YAxis } from 'recharts';
 
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import Chart from './Chart';
-import TotalSurvey from './TotalSurvey';
-import ResponseRate from './ResponseRate';
-import PositiveRate from './PositiveRate';
-import TodayResponse from './TodayResponse';
-import LatestResponse from './LatestResponse';
+import Chart from './components/Chart';
+import TotalSurvey from './components/TotalSurvey';
+import ResponseRate from './components/ResponseRate';
+import PositiveRate from './components/PositiveRate';
+import TodayResponse from './components/TodayResponse';
+import LatestResponse from './components/LatestResponse';
 import Listing from './Listing';
 import { prisma } from '@/prisma/db';
+import Rankings from './Rankings';
 
 export default function Overview() {
   return (
@@ -26,6 +27,7 @@ export default function Overview() {
       <TabsList>
         <TabsTrigger value="overview">Overview</TabsTrigger>
         <TabsTrigger value="listing">Survey Listing</TabsTrigger>
+        <TabsTrigger value="rankings">Rankings</TabsTrigger>
       </TabsList>
       <TabsContent value="overview">
         <div className="flex flex-col">
@@ -35,8 +37,8 @@ export default function Overview() {
             <TodayResponse />
             <PositiveRate />
           </div>
-          <div className="flex gap-10 w-full mt-5 justify-between border-2">
-            <div className="w-[60%] border-2 p-8">
+          <div className="flex gap-10 w-full mt-5 justify-between">
+            <div className="w-[60%] p-8">
               <h1 className="mb-5 font-bold">Bar graph of responses</h1>
               <Chart />
             </div>
@@ -46,6 +48,10 @@ export default function Overview() {
       </TabsContent>
       <TabsContent value="listing">
         <Listing />
+      </TabsContent>
+
+      <TabsContent value="rankings">
+        <Rankings />
       </TabsContent>
     </Tabs>
   );
