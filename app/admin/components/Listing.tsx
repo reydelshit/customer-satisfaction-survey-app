@@ -91,12 +91,6 @@ export default function Listing() {
           serviceExperience: survey.serviceExperience,
         });
       });
-
-    console.log(
-      rating.overallSatisfaction,
-      rating.foodQualityRate,
-      rating.serviceExperience,
-    );
   };
 
   const handleAnalyzeGpt = () => {
