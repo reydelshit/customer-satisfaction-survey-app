@@ -50,7 +50,7 @@ export default function Rankings() {
       if (feedbackSurvey) {
         setFeedbacks(feedbackSurvey);
 
-        console.log(feedbackSurvey);
+        // console.log(feedbackSurvey);
 
         const averageRatings: Record<string, AverageRating> =
           feedbackSurvey.reduce((acc, item) => {
@@ -70,17 +70,12 @@ export default function Rankings() {
             numberOfProd++;
             const average =
               averageRatings[product].sum / averageRatings[product].count;
-
-            setOverallAverageRating([
-              ...overallAverageRating,
+            setOverallAverageRating((prev) => [
+              ...prev,
               { product, averageRating: average },
             ]);
           }
         }
-
-        setNumberOfProduct(numberOfProd);
-
-        console.log(numberOfProd);
       }
     } catch (error) {
       console.error('listing', error);
@@ -91,17 +86,27 @@ export default function Rankings() {
     fetchTotalSurvey();
   }, []);
 
-  // .map((item) => item.overallSatisfaction)
   return (
     <div className="w-full flex flex-col gap-5 justify-center items-center text-center">
       <Button className="self-end w-[8rem]">Sort</Button>
       <div className="flex flex-col gap-5 justify-center items-center text-center">
         <div className="w-[15rem] h-[10rem] border-2">
-          {sorted.length > 0 && sorted[0].product}
-        </div>
-        <div className="flex gap-5">
-          <div className="w-[15rem] h-[10rem] border-2">rank 2</div>
-          <div className="w-[15rem] h-[10rem] border-2">rank 3</div>
+          {overallAverageRating
+            .sort((a, b) => b.averageRating - a.averageRating)
+            .map((item, index) => (
+              <div className="border-2" key={index}>
+                {index == 0 && (
+                  <div>
+                    {item.averageRating} {item.product}
+                  </div>
+                )}
+                {index !== 0 && (
+                  <div key={index}>
+                    {item.averageRating} {item.product}
+                  </div>
+                )}
+              </div>
+            ))}
         </div>
       </div>
     </div>
