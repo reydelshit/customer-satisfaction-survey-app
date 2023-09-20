@@ -26,29 +26,61 @@ interface Feedback {
   updatedAt: Date;
 }
 
-interface AverageRat {
+interface AverageRating {
+  sum: number;
+  count: number;
+}
+
+interface AverageRatingProduct {
   product: string;
-  overallSatisfaction: number;
+  averageRating: number;
 }
 
 export default function Rankings() {
   const [feedbacks, setFeedbacks] = useState<Feedback[]>([]);
   const [sorted, setSorted] = useState<Feedback[]>([]);
-  const [averageRating, setAverageRating] = useState();
-
-
+  const [numberOfProduct, setNumberOfProduct] = useState<number>(0);
+  const [overallAverageRating, setOverallAverageRating] = useState<
+    AverageRatingProduct[]
+  >([]);
 
   async function fetchTotalSurvey() {
     try {
-      const feedbackSurvey = await getAllSurvey();
+      const feedbackSurvey: Feedback[] = await getAllSurvey();
       if (feedbackSurvey) {
         setFeedbacks(feedbackSurvey);
 
-        const averageRatings: AverageRat = feedbacks.reduce((acc, feedback) => {
-          const { product, overallSatisfaction } = feedback;
-          acc[product] = (acc[product] || 0) + overallSatisfaction;
-          return acc;
-        }, {});
+        console.log(feedbackSurvey);
+
+        const averageRatings: Record<string, AverageRating> =
+          feedbackSurvey.reduce((acc, item) => {
+            if (!acc[item.product]) {
+              acc[item.product] = { sum: 0, count: 0 };
+            }
+            setNumberOfProduct(item.product.length);
+            acc[item.product].sum += item.overallSatisfaction;
+            acc[item.product].count++;
+
+            return acc;
+          }, {} as Record<string, AverageRating>);
+
+        let numberOfProd = 0;
+        for (const product in averageRatings) {
+          if (averageRatings.hasOwnProperty(product)) {
+            numberOfProd++;
+            const average =
+              averageRatings[product].sum / averageRatings[product].count;
+
+            setOverallAverageRating([
+              ...overallAverageRating,
+              { product, averageRating: average },
+            ]);
+          }
+        }
+
+        setNumberOfProduct(numberOfProd);
+
+        console.log(numberOfProd);
       }
     } catch (error) {
       console.error('listing', error);
