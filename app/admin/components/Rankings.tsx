@@ -26,16 +26,17 @@ interface Feedback {
   updatedAt: Date;
 }
 
-type AverageRat = {
-  [food: string]: {
-    count: number;
-    totalRating: number;
-  };
-};
+interface AverageRat {
+  product: string;
+  overallSatisfaction: number;
+}
 
 export default function Rankings() {
   const [feedbacks, setFeedbacks] = useState<Feedback[]>([]);
   const [sorted, setSorted] = useState<Feedback[]>([]);
+  const [averageRating, setAverageRating] = useState();
+
+
 
   async function fetchTotalSurvey() {
     try {
@@ -43,22 +44,11 @@ export default function Rankings() {
       if (feedbackSurvey) {
         setFeedbacks(feedbackSurvey);
 
-        const foodRatings = {};
-
-        surveyResponses.forEach((response) => {
-          if (!foodRatings[response.food]) {
-            foodRatings[response.food] = { total: 0, count: 0 };
-          }
-          foodRatings[response.food].total += response.rating;
-          foodRatings[response.food].count++;
-        });
-
-        const averageRatings = {};
-
-        for (const food in foodRatings) {
-          averageRatings[food] =
-            foodRatings[food].total / foodRatings[food].count;
-        }
+        const averageRatings: AverageRat = feedbacks.reduce((acc, feedback) => {
+          const { product, overallSatisfaction } = feedback;
+          acc[product] = (acc[product] || 0) + overallSatisfaction;
+          return acc;
+        }, {});
       }
     } catch (error) {
       console.error('listing', error);
