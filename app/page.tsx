@@ -70,6 +70,10 @@ export default function Home() {
       value: 'mango',
       label: 'Mango',
     },
+    {
+      value: 'apple',
+      label: 'Apple',
+    },
   ];
 
   const clearState = () => {

@@ -90,23 +90,64 @@ export default function Rankings() {
     <div className="w-full flex flex-col gap-5 justify-center items-center text-center">
       <Button className="self-end w-[8rem]">Sort</Button>
       <div className="flex flex-col gap-5 justify-center items-center text-center">
-        <div className="w-[15rem] h-[10rem] border-2">
-          {overallAverageRating
-            .sort((a, b) => b.averageRating - a.averageRating)
-            .map((item, index) => (
-              <div className="border-2" key={index}>
-                {index == 0 && (
-                  <div>
-                    {item.averageRating} {item.product}
-                  </div>
-                )}
-                {index !== 0 && (
-                  <div key={index}>
-                    {item.averageRating} {item.product}
-                  </div>
-                )}
+        <div className="w-[50rem] flex flex-col justify-center items-center p-2">
+          <div className="flex flex-wrap flex-col justify-center items-center gap-10">
+            {/* Rank 1 */}
+
+            {overallAverageRating.length > 0 && (
+              <div className="relative border-2 h-[20rem] w-[20rem] p-10 rounded-sm">
+                <div className="border-[0.3rem] border-blue-600 h-full">
+                  image diri
+                </div>
+
+                <div className="absolute left-0 bottom-[5rem] bg-white z-10 h-[3rem] text-center w-full  grid place-content-center">
+                  <h1 className="font-bold text-3xl text-blue-600">
+                    {overallAverageRating[0].product}
+                  </h1>
+                  <h1 className="text-blue-500 font-bold">
+                    {overallAverageRating[0].averageRating}
+                  </h1>
+                  <p className="text-blue-500 font-bold">RANK 1</p>
+                </div>
               </div>
-            ))}
+            )}
+
+            {overallAverageRating.length > 0 && (
+              <div className="flex gap-10">
+                <div className="relative border-2 h-[20rem] w-[20rem] p-10 rounded-sm">
+                  <div className="border-[0.3rem] border-red-600 h-full">
+                    image diri
+                  </div>
+
+                  <div className="absolute left-0 bottom-[5rem] bg-white z-10 h-[3rem] text-center w-full  grid place-content-center">
+                    <h1 className="font-bold text-3xl text-red-600">
+                      {overallAverageRating[1].product}
+                    </h1>
+                    <h1 className="text-red-500 font-bold">
+                      {overallAverageRating[1].averageRating}
+                    </h1>
+                    <p className="text-red-500 font-bold">RANK 2</p>
+                  </div>
+                </div>
+
+                <div className=" border-2 h-[20rem] w-[20rem] p-10 relative rounded-sm">
+                  <div className="border-[0.3rem] border-black h-full">
+                    image diri
+                  </div>
+
+                  <div className="absolute left-0 bottom-[5rem] bg-white z-10 h-[3rem] text-center w-full  grid place-content-center">
+                    <h1 className="font-bold text-3xl">
+                      {overallAverageRating[2].product}
+                    </h1>
+                    <h1 className="text-gray-900 font-bold">
+                      {overallAverageRating[2].averageRating}
+                    </h1>
+                    <p className="text-gray-900 font-bold">RANK 3</p>
+                  </div>
+                </div>
+              </div>
+            )}
+          </div>
         </div>
       </div>
     </div>
