@@ -4,6 +4,14 @@ import { Button } from '@/components/ui/button';
 import { useState, useEffect } from 'react';
 
 import { getAllSurvey } from '../action/getTotalSurvey';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
+import Rank from './components/Rank';
 
 interface Feedback {
   id: number;
@@ -34,17 +42,26 @@ interface AverageRating {
 interface AverageRatingProduct {
   product: string;
   averageRating: number;
+  name?: string;
 }
 
 export default function Rankings() {
   const [feedbacks, setFeedbacks] = useState<Feedback[]>([]);
-  const [sorted, setSorted] = useState<Feedback[]>([]);
-  const [numberOfProduct, setNumberOfProduct] = useState<number>(0);
+  // const [numberOfProduct, setNumberOfProduct] = useState<number>(0);
   const [overallAverageRating, setOverallAverageRating] = useState<
     AverageRatingProduct[]
   >([]);
+  const [foodAverageRating, setFoodAverageRating] = useState<
+    AverageRatingProduct[]
+  >([]);
+  const [serviceAverageRating, setServiceAverageRating] = useState<
+    AverageRatingProduct[]
+  >([]);
 
-  async function fetchTotalSurvey() {
+  const [selectedSort, setSelectedSort] =
+    useState<AverageRatingProduct[]>(overallAverageRating);
+
+  async function fetchOverallRating() {
     try {
       const feedbackSurvey: Feedback[] = await getAllSurvey();
       if (feedbackSurvey) {
@@ -52,12 +69,13 @@ export default function Rankings() {
 
         // console.log(feedbackSurvey);
 
+        // overall rate average
         const averageRatings: Record<string, AverageRating> =
           feedbackSurvey.reduce((acc, item) => {
             if (!acc[item.product]) {
               acc[item.product] = { sum: 0, count: 0 };
             }
-            setNumberOfProduct(item.product.length);
+            // setNumberOfProduct(item.product.length);
             acc[item.product].sum += item.overallSatisfaction;
             acc[item.product].count++;
 
@@ -76,6 +94,56 @@ export default function Rankings() {
             ]);
           }
         }
+
+        // food quality rate
+        const foodAverageRatings: Record<string, AverageRating> =
+          feedbackSurvey.reduce((acc, item) => {
+            if (!acc[item.product]) {
+              acc[item.product] = { sum: 0, count: 0 };
+            }
+            // setNumberOfProduct(item.product.length);
+            acc[item.product].sum += item.foodQualityRate;
+            acc[item.product].count++;
+
+            return acc;
+          }, {} as Record<string, AverageRating>);
+
+        for (const product in foodAverageRatings) {
+          if (foodAverageRatings.hasOwnProperty(product)) {
+            const average =
+              foodAverageRatings[product].sum /
+              foodAverageRatings[product].count;
+            setFoodAverageRating((prev) => [
+              ...prev,
+              { product, averageRating: average },
+            ]);
+          }
+        }
+
+        // service quality rate
+        const serviceAverageRatings: Record<string, AverageRating> =
+          feedbackSurvey.reduce((acc, item) => {
+            if (!acc[item.product]) {
+              acc[item.product] = { sum: 0, count: 0 };
+            }
+            // setNumberOfProduct(item.product.length);
+            acc[item.product].sum += item.serviceExperience;
+            acc[item.product].count++;
+
+            return acc;
+          }, {} as Record<string, AverageRating>);
+
+        for (const product in serviceAverageRatings) {
+          if (serviceAverageRatings.hasOwnProperty(product)) {
+            const average =
+              serviceAverageRatings[product].sum /
+              serviceAverageRatings[product].count;
+            setServiceAverageRating((prev) => [
+              ...prev,
+              { product, averageRating: average },
+            ]);
+          }
+        }
       }
     } catch (error) {
       console.error('listing', error);
@@ -83,70 +151,45 @@ export default function Rankings() {
   }
 
   useEffect(() => {
-    fetchTotalSurvey();
+    fetchOverallRating();
   }, []);
+
+  const handleSorting = (event: string) => {
+    const selectedValue = event;
+    if (selectedValue === 'Overall') {
+      setSelectedSort(overallAverageRating);
+    }
+
+    if (selectedValue === 'Food') {
+      setSelectedSort(foodAverageRating);
+    }
+
+    if (selectedValue === 'Service') {
+      setSelectedSort(serviceAverageRating);
+    }
+
+    console.log('sorted');
+  };
 
   return (
     <div className="w-full flex flex-col gap-5 justify-center items-center text-center">
-      <Button className="self-end w-[8rem]">Sort</Button>
+      <div className="self-end">
+        <Select onValueChange={handleSorting}>
+          <SelectTrigger className="w-[180px]">
+            <SelectValue placeholder="Sort" />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem value="Overall">Overall</SelectItem>
+            <SelectItem value="Food">Food Quality</SelectItem>
+            <SelectItem value="Service">Service Quality</SelectItem>
+          </SelectContent>
+        </Select>
+      </div>
+
       <div className="flex flex-col gap-5 justify-center items-center text-center">
         <div className="w-[50rem] flex flex-col justify-center items-center p-2">
           <div className="flex flex-wrap flex-col justify-center items-center gap-10">
-            {/* Rank 1 */}
-
-            {overallAverageRating.length > 0 && (
-              <div className="relative border-2 h-[20rem] w-[20rem] p-10 rounded-sm">
-                <div className="border-[0.3rem] border-blue-600 h-full">
-                  image diri
-                </div>
-
-                <div className="absolute left-0 bottom-[5rem] bg-white z-10 h-[3rem] text-center w-full  grid place-content-center">
-                  <h1 className="font-bold text-3xl text-blue-600">
-                    {overallAverageRating[0].product}
-                  </h1>
-                  <h1 className="text-blue-500 font-bold">
-                    {overallAverageRating[0].averageRating}
-                  </h1>
-                  <p className="text-blue-500 font-bold">RANK 1</p>
-                </div>
-              </div>
-            )}
-
-            {overallAverageRating.length > 0 && (
-              <div className="flex gap-10">
-                <div className="relative border-2 h-[20rem] w-[20rem] p-10 rounded-sm">
-                  <div className="border-[0.3rem] border-red-600 h-full">
-                    image diri
-                  </div>
-
-                  <div className="absolute left-0 bottom-[5rem] bg-white z-10 h-[3rem] text-center w-full  grid place-content-center">
-                    <h1 className="font-bold text-3xl text-red-600">
-                      {overallAverageRating[1].product}
-                    </h1>
-                    <h1 className="text-red-500 font-bold">
-                      {overallAverageRating[1].averageRating}
-                    </h1>
-                    <p className="text-red-500 font-bold">RANK 2</p>
-                  </div>
-                </div>
-
-                <div className=" border-2 h-[20rem] w-[20rem] p-10 relative rounded-sm">
-                  <div className="border-[0.3rem] border-black h-full">
-                    image diri
-                  </div>
-
-                  <div className="absolute left-0 bottom-[5rem] bg-white z-10 h-[3rem] text-center w-full  grid place-content-center">
-                    <h1 className="font-bold text-3xl">
-                      {overallAverageRating[2].product}
-                    </h1>
-                    <h1 className="text-gray-900 font-bold">
-                      {overallAverageRating[2].averageRating}
-                    </h1>
-                    <p className="text-gray-900 font-bold">RANK 3</p>
-                  </div>
-                </div>
-              </div>
-            )}
+            <Rank rating={selectedSort} />
           </div>
         </div>
       </div>
