@@ -75,25 +75,21 @@ export default function Rankings() {
             if (!acc[item.product]) {
               acc[item.product] = { sum: 0, count: 0 };
             }
-            // setNumberOfProduct(item.product.length);
             acc[item.product].sum += item.overallSatisfaction;
             acc[item.product].count++;
 
             return acc;
           }, {} as Record<string, AverageRating>);
 
-        let numberOfProd = 0;
-        for (const product in averageRatings) {
-          if (averageRatings.hasOwnProperty(product)) {
-            numberOfProd++;
-            const average =
-              averageRatings[product].sum / averageRatings[product].count;
-            setOverallAverageRating((prev) => [
-              ...prev,
-              { product, averageRating: average },
-            ]);
-          }
-        }
+        const averageRatingsArray = Object.keys(averageRatings).map(
+          (product) => ({
+            product,
+            averageRating:
+              averageRatings[product].sum / averageRatings[product].count,
+          }),
+        );
+        averageRatingsArray.sort((a, b) => b.averageRating - a.averageRating);
+        setOverallAverageRating(averageRatingsArray);
 
         // food quality rate
         const foodAverageRatings: Record<string, AverageRating> =
@@ -101,24 +97,22 @@ export default function Rankings() {
             if (!acc[item.product]) {
               acc[item.product] = { sum: 0, count: 0 };
             }
-            // setNumberOfProduct(item.product.length);
             acc[item.product].sum += item.foodQualityRate;
             acc[item.product].count++;
 
             return acc;
           }, {} as Record<string, AverageRating>);
 
-        for (const product in foodAverageRatings) {
-          if (foodAverageRatings.hasOwnProperty(product)) {
-            const average =
+        const foodRatingsArray = Object.keys(foodAverageRatings).map(
+          (product) => ({
+            product,
+            averageRating:
               foodAverageRatings[product].sum /
-              foodAverageRatings[product].count;
-            setFoodAverageRating((prev) => [
-              ...prev,
-              { product, averageRating: average },
-            ]);
-          }
-        }
+              foodAverageRatings[product].count,
+          }),
+        );
+        foodRatingsArray.sort((a, b) => b.averageRating - a.averageRating);
+        setFoodAverageRating(foodRatingsArray);
 
         // service quality rate
         const serviceAverageRatings: Record<string, AverageRating> =
@@ -133,17 +127,16 @@ export default function Rankings() {
             return acc;
           }, {} as Record<string, AverageRating>);
 
-        for (const product in serviceAverageRatings) {
-          if (serviceAverageRatings.hasOwnProperty(product)) {
-            const average =
+        const serviceRatingsArray = Object.keys(serviceAverageRatings).map(
+          (product) => ({
+            product,
+            averageRating:
               serviceAverageRatings[product].sum /
-              serviceAverageRatings[product].count;
-            setServiceAverageRating((prev) => [
-              ...prev,
-              { product, averageRating: average },
-            ]);
-          }
-        }
+              serviceAverageRatings[product].count,
+          }),
+        );
+        serviceRatingsArray.sort((a, b) => b.averageRating - a.averageRating);
+        setServiceAverageRating(serviceRatingsArray);
       }
     } catch (error) {
       console.error('listing', error);
@@ -168,7 +161,7 @@ export default function Rankings() {
       setSelectedSort(serviceAverageRating);
     }
 
-    console.log('sorted');
+    console.log(overallAverageRating);
   };
 
   return (
