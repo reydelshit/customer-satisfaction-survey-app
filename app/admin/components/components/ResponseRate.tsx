@@ -31,7 +31,7 @@ export default function ResponseRate() {
   }, []);
 
   return (
-    <Card className="w-[25rem]">
+    <Card className="w-full md:w-[25rem]">
       <CardHeader>
         <CardTitle>Response Rate</CardTitle>
         <CardDescription>Based on potential respondents</CardDescription>

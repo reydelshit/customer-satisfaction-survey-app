@@ -105,8 +105,8 @@ export default function Listing() {
     }, delay);
   };
   return (
-    <div className="flex flex-row p-8 justify-between gap-10">
-      <div className="w-[30%]">
+    <div className="flex flex-col md:flex-row p-2 md:p-8 justify-between md:gap-10">
+      <div className="w-full md:w-[30%]">
         <Label className="font-bold mb-5 block">
           Total Respondent: {latestResponse.length}
         </Label>
@@ -159,7 +159,7 @@ export default function Listing() {
                     Respondent Number {survey.id}
                   </h1>
 
-                  <div className="mb-10 mr-10 self-end">
+                  <div className="flex justify-center items-center w-full md:flex md:justify-end mb-5 md:mb-10 md:mr-10 md:self-end">
                     <Button
                       onClick={handleAnalyzeGpt}
                       className="w-[8rem] mr-2"
@@ -205,8 +205,8 @@ export default function Listing() {
                     </div>
                   )}
 
-                  <div className="flex gap-2 justify-center">
-                    <Card className="w-[20rem]">
+                  <div className="flex flex-col md:flex-row gap-2 justify-center">
+                    <Card className="w-full md:w-[20rem]">
                       <CardHeader>
                         <CardTitle>Overall Satisfaction</CardTitle>
                       </CardHeader>
@@ -216,7 +216,7 @@ export default function Listing() {
                         </h1>
                       </CardContent>
                     </Card>
-                    <Card className="w-[20rem]">
+                    <Card className="w-full md:w-[20rem]">
                       <CardHeader>
                         <CardTitle>Food Quality</CardTitle>
                       </CardHeader>
@@ -226,7 +226,7 @@ export default function Listing() {
                         </h1>
                       </CardContent>
                     </Card>
-                    <Card className="w-[20rem]">
+                    <Card className="w-full md:w-[20rem]">
                       <CardHeader>
                         <CardTitle>Service Experience</CardTitle>
                       </CardHeader>

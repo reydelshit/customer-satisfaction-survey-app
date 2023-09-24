@@ -14,14 +14,14 @@ import Rankings from './Rankings';
 export default function Overview() {
   return (
     <div className="flex flex-col">
-      <div className="flex justify-between gap-2 mt-5">
+      <div className="flex flex-col md:flex-row justify-between gap-2 mt-5">
         <TotalSurvey />
         <ResponseRate />
         <TodayResponse />
         <PositiveRate />
       </div>
-      <div className="flex gap-10 w-full mt-5 justify-between">
-        <div className="w-[60%] p-8">
+      <div className="flex flex-col md:flex-row md:gap-10 w-full mt-5 justify-between">
+        <div className="w-full md:w-[60%] md:p-8">
           <h1 className="mb-5 font-bold uppercase">Bar graph of responses</h1>
           <Chart />
         </div>

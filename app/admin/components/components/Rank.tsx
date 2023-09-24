@@ -13,7 +13,7 @@ export default function Rank({ rating }: { rating: any }) {
     <>
       {rating.length > 0 ? (
         <>
-          <div className="relative h-[20rem] w-[20rem] p-10 rounded-sm">
+          <div className="relative h-[20rem] w-full md:w-[20rem] md:p-10 rounded-sm mb-2">
             <div className="border-[0.3rem] border-blue-600 h-full">
               image diri
             </div>
@@ -28,8 +28,8 @@ export default function Rank({ rating }: { rating: any }) {
               <p className="text-blue-500 font-bold">RANK 1</p>
             </div>
           </div>
-          <div className="flex gap-10">
-            <div className="relative h-[20rem] w-[20rem] p-10 rounded-sm">
+          <div className="flex flex-col md:flex-row md:gap-10">
+            <div className="relative h-[20rem] w-full md:w-[20rem] md:p-10 rounded-sm mb-2">
               <div className="border-[0.3rem] border-red-600 h-full">
                 image diri
               </div>
@@ -45,7 +45,7 @@ export default function Rank({ rating }: { rating: any }) {
               </div>
             </div>
 
-            <div className=" h-[20rem] w-[20rem] p-10 relative rounded-sm">
+            <div className=" h-[20rem] w-[20rem] md:p-10 relative rounded-sm">
               <div className="border-[0.3rem] border-black h-full">
                 image diri
               </div>
@@ -60,7 +60,7 @@ export default function Rank({ rating }: { rating: any }) {
             </div>
           </div>
 
-          <Table className="text-center">
+          <Table className="text-center w-full">
             <TableHeader>
               <TableRow>
                 <TableHead>Rank</TableHead>

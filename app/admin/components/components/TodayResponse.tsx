@@ -40,7 +40,7 @@ export default function TodayResponse() {
   }, []);
 
   return (
-    <Card className="w-[25rem]">
+    <Card className="w-full md:w-[25rem]">
       <CardHeader>
         <CardTitle>Today Responses</CardTitle>
         <CardDescription>Total responses for today</CardDescription>

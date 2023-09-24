@@ -142,8 +142,8 @@ export default function Home() {
   };
 
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <div className="w-[30%] text-center">
+    <main className="flex min-h-screen flex-col items-center justify-between p-5 md:p-24">
+      <div className="md:w-[30%] text-center">
         <h1 className="mb-4 font-semibold">reydel's customer survey app</h1>
         <div className="text-start flex flex-col">
           <Input

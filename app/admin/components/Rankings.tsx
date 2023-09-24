@@ -161,7 +161,7 @@ export default function Rankings() {
   };
 
   return (
-    <div className="w-full flex flex-col gap-5 justify-center items-center text-center">
+    <div className="w-full flex flex-col gap-5 justify-center items-center text-center mt-5">
       <div className="self-end">
         <Select onValueChange={handleSorting}>
           <SelectTrigger className="w-[180px]">
@@ -176,8 +176,8 @@ export default function Rankings() {
       </div>
 
       <div className="flex flex-col gap-5 justify-center items-center text-center">
-        <div className="w-[50rem] flex flex-col justify-center items-center p-2">
-          <div className="flex flex-wrap flex-col justify-center items-center gap-10">
+        <div className="w-full md:w-[50rem] flex flex-col justify-center items-center p-2">
+          <div className="flex flex-wrap flex-col justify-center items-center md:gap-10">
             {selectedSort.length !== 0 ? (
               <Rank rating={selectedSort} />
             ) : (

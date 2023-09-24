@@ -36,7 +36,7 @@ export default function PositiveRate() {
   }, []);
 
   return (
-    <Card className="w-[25rem]">
+    <Card className="w-full md:w-[25rem]">
       <CardHeader>
         <CardTitle>Positive Responses Rate</CardTitle>
         <CardDescription>

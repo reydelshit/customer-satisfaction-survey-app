@@ -15,7 +15,7 @@ import {
 
 export default function ViewDetails({ survey }: any) {
   return (
-    <div className="px-20">
+    <div className="md:px-20">
       {/* food quality  */}
 
       <div className="mt-4">

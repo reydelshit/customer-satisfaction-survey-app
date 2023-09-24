@@ -32,7 +32,7 @@ export default function TotalSurvey() {
   }, []);
 
   return (
-    <Card className="w-[25rem]">
+    <Card className="w-full md:w-[25rem]">
       <CardHeader>
         <CardTitle>Total Survey Submitted</CardTitle>
         <CardDescription>Total response from customers</CardDescription>

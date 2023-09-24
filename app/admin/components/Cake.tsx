@@ -10,13 +10,12 @@ import { useState } from 'react';
 export default function Cake() {
   const { toast } = useToast();
 
-  const [cake, setCake] = useState('');
-  const [description, setDescription] = useState('');
-  const [image, setImage] = useState('');
+  const [cake, setCake] = useState<string>('');
+  const [description, setDescription] = useState<string>('');
+  const [image, setImage] = useState<string>('');
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
-    // preventDefault();
     await addCake({
       cake,
       description,
@@ -34,7 +33,7 @@ export default function Cake() {
   };
 
   return (
-    <div className="flex gap-10">
+    <div className="flex flex-col md:flex-row gap-10">
       <Toaster />
       <div>
         <h1 className="mt-5">Add Cake</h1>

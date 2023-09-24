@@ -59,7 +59,7 @@ export default function LatestResponse() {
   }, []);
 
   return (
-    <div className="w-[40%] p-8">
+    <div className="w-full md:w-[40%] md:p-8">
       <div className="flex justify-between mb-2">
         <h1 className="font-bold mb-2 uppercase">Latest Responses</h1>
         <Label>Only shows 10</Label>
