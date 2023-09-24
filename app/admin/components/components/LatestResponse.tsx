@@ -11,6 +11,8 @@ import {
 } from '@/components/ui/table';
 import { getAllSurvey } from '../../action/getTotalSurvey';
 import { useState, useEffect } from 'react';
+import { Label } from '@/components/ui/label';
+import { Skeleton } from '@/components/ui/skeleton';
 
 interface Feedback {
   id: number;
@@ -58,31 +60,42 @@ export default function LatestResponse() {
 
   return (
     <div className="w-[40%] p-8">
-      <h1 className="font-bold mb-2">Latest Responses</h1>
-      <p>only shows 10</p>
-      <Table className="w-full self-end border-2">
-        <TableHeader>
-          <TableRow>
-            <TableHead>Product</TableHead>
-            <TableHead>Feedback</TableHead>
+      <div className="flex justify-between mb-2">
+        <h1 className="font-bold mb-2 uppercase">Latest Responses</h1>
+        <Label>Only shows 10</Label>
+      </div>
 
-            <TableHead className="text-right">Overall Rating</TableHead>
-          </TableRow>
-        </TableHeader>
-        <TableBody>
-          {latestResponse &&
-            latestResponse.slice(0, 10).map((survey) => (
-              <TableRow key={survey.id}>
-                <TableCell>{survey.product}</TableCell>
-                <TableCell>{survey.feedbackMessage}</TableCell>
+      {latestResponse.length > 0 ? (
+        <Table className="w-full self-end border-2">
+          <TableHeader>
+            <TableRow>
+              <TableHead>Product</TableHead>
+              <TableHead>Feedback</TableHead>
 
-                <TableCell className="text-right">
-                  {survey.overallSatisfaction}/10
-                </TableCell>
-              </TableRow>
-            ))}
-        </TableBody>
-      </Table>
+              <TableHead className="text-right">Overall Rating</TableHead>
+            </TableRow>
+          </TableHeader>
+          <TableBody>
+            {latestResponse &&
+              latestResponse.slice(0, 10).map((survey) => (
+                <TableRow key={survey.id}>
+                  <TableCell>{survey.product}</TableCell>
+                  <TableCell>{survey.feedbackMessage}</TableCell>
+
+                  <TableCell className="text-right">
+                    {survey.overallSatisfaction}/10
+                  </TableCell>
+                </TableRow>
+              ))}
+          </TableBody>
+        </Table>
+      ) : (
+        <div className="flex items-center space-x-4 w-full">
+          <div className="h-[30rem] grid place-items-center place-content-center w-full">
+            <div className="spinner"></div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

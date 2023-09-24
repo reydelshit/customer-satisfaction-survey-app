@@ -25,6 +25,7 @@ import { useState, useEffect } from 'react';
 
 import Analyze from './components/Analyze';
 import ViewDetails from './components/ViewDetails';
+import { Label } from '@/components/ui/label';
 
 interface Feedback {
   id: number;
@@ -105,19 +106,20 @@ export default function Listing() {
   return (
     <div className="flex flex-row p-8 justify-between gap-10">
       <div className="w-[30%]">
+        <Label className="font-bold mb-5 block">
+          Total Respondent: {latestResponse.length}
+        </Label>
         {latestResponse && latestResponse.length > 0 ? (
           <Table className="w-full self-end border-2">
             <TableHeader>
               <TableRow>
-                <TableHead>ID</TableHead>
-
                 <TableHead>Product</TableHead>
                 <TableHead>Feedback</TableHead>
 
                 <TableHead className="text-right">Overall Rating</TableHead>
               </TableRow>
             </TableHeader>
-            <TableBody className="h-[30rem] border-2 border-orange-300">
+            <TableBody className="h-full">
               {latestResponse &&
                 latestResponse.length > 0 &&
                 latestResponse.map((survey) => (
@@ -126,8 +128,6 @@ export default function Listing() {
                     onClick={() => handleViewDetails(survey.id)}
                     className="cursor-pointer"
                   >
-                    <TableCell>{survey.id}</TableCell>
-
                     <TableCell>{survey.product}</TableCell>
                     <TableCell>
                       {survey.feedbackMessage?.slice(0, 50)}
@@ -148,7 +148,7 @@ export default function Listing() {
       </div>
 
       {decider && (
-        <div className="w-[80%]">
+        <div className="w-full">
           {latestResponse &&
             latestResponse
               .filter((survey) => survey.id === holdTheId)

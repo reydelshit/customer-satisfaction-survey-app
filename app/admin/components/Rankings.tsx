@@ -151,17 +151,13 @@ export default function Rankings() {
     const selectedValue = event;
     if (selectedValue === 'Overall') {
       setSelectedSort(overallAverageRating);
-    }
-
-    if (selectedValue === 'Food') {
+    } else if (selectedValue === 'Food') {
       setSelectedSort(foodAverageRating);
-    }
-
-    if (selectedValue === 'Service') {
+    } else if (selectedValue === 'Service') {
       setSelectedSort(serviceAverageRating);
+    } else {
+      setSelectedSort(overallAverageRating);
     }
-
-    console.log(overallAverageRating);
   };
 
   return (
@@ -182,7 +178,11 @@ export default function Rankings() {
       <div className="flex flex-col gap-5 justify-center items-center text-center">
         <div className="w-[50rem] flex flex-col justify-center items-center p-2">
           <div className="flex flex-wrap flex-col justify-center items-center gap-10">
-            <Rank rating={selectedSort} />
+            {selectedSort.length !== 0 ? (
+              <Rank rating={selectedSort} />
+            ) : (
+              <Rank rating={overallAverageRating} />
+            )}
           </div>
         </div>
       </div>

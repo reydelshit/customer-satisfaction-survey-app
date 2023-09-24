@@ -39,7 +39,9 @@ export default function Overview() {
           </div>
           <div className="flex gap-10 w-full mt-5 justify-between">
             <div className="w-[60%] p-8">
-              <h1 className="mb-5 font-bold">Bar graph of responses</h1>
+              <h1 className="mb-5 font-bold uppercase">
+                Bar graph of responses
+              </h1>
               <Chart />
             </div>
             <LatestResponse />

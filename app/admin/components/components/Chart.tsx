@@ -13,6 +13,8 @@ export default function Chart() {
     },
   ]);
 
+  const [loading, setLoading] = useState(false);
+
   async function fetchTotalSurvey() {
     try {
       const totalSurvey = await getAllSurvey();
@@ -47,8 +49,9 @@ export default function Chart() {
             name: month.month,
           };
         });
-
         setTotalDaySurvey([...totalDayEachMonth]);
+
+        // console.log(totalDaySurvey.length);
       }
     } catch (error) {
       console.log('today', error);
@@ -60,24 +63,32 @@ export default function Chart() {
   }, []);
 
   return (
-    <ResponsiveContainer width="100%" height={450}>
-      <BarChart data={totalDaySurvey}>
-        <XAxis
-          dataKey="name"
-          stroke="#888888"
-          fontSize={12}
-          tickLine={false}
-          axisLine={false}
-        />
-        <YAxis
-          stroke="#888888"
-          fontSize={12}
-          tickLine={false}
-          axisLine={false}
-          tickFormatter={(value) => `${value}`}
-        />
-        <Bar dataKey="total" fill="#adfa1d" radius={[4, 4, 0, 0]} />
-      </BarChart>
-    </ResponsiveContainer>
+    <>
+      <ResponsiveContainer width="100%" height={450}>
+        {totalDaySurvey.length > 0 ? (
+          <BarChart data={totalDaySurvey}>
+            <XAxis
+              dataKey="name"
+              stroke="#888888"
+              fontSize={12}
+              tickLine={false}
+              axisLine={false}
+            />
+            <YAxis
+              stroke="#888888"
+              fontSize={12}
+              tickLine={false}
+              axisLine={false}
+              tickFormatter={(value) => `${value}`}
+            />
+            <Bar dataKey="total" fill="#f97316" radius={[4, 4, 0, 0]} />
+          </BarChart>
+        ) : (
+          <div className="h-[30rem] grid place-items-center place-content-center border-2 ">
+            <div className="spinner"></div>
+          </div>
+        )}
+      </ResponsiveContainer>
+    </>
   );
 }
