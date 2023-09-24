@@ -1,3 +1,13 @@
+import {
+  Table,
+  TableBody,
+  TableCaption,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from '@/components/ui/table';
+
 export default function Rank({ rating }: { rating: any }) {
   return (
     <>
@@ -51,6 +61,33 @@ export default function Rank({ rating }: { rating: any }) {
             </div>
           </div>
         </div>
+      )}
+
+      {rating.length > 0 && (
+        <Table className="border-2 text-center">
+          <TableHeader>
+            <TableRow>
+              <TableHead>Rank</TableHead>
+              <TableHead>Product</TableHead>
+              <TableHead>Rating</TableHead>
+            </TableRow>
+          </TableHeader>
+          <TableBody>
+            {rating.map((rat: any, index: number) => {
+              return (
+                <>
+                  {index > 2 && (
+                    <TableRow className="text-start">
+                      <TableCell>{index + 1}</TableCell>
+                      <TableCell>{rat.product}</TableCell>
+                      <TableCell>{rat.averageRating}</TableCell>
+                    </TableRow>
+                  )}
+                </>
+              );
+            })}
+          </TableBody>
+        </Table>
       )}
     </>
   );

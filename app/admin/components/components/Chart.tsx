@@ -1,62 +1,67 @@
 'use client';
 
+import { useEffect, useState } from 'react';
 import { Bar, BarChart, ResponsiveContainer, XAxis, YAxis } from 'recharts';
+import { getAllSurvey } from '../../action/getRankings';
+import moment from 'moment';
 
 export default function Chart() {
-  const data = [
+  const [totalDaySurvey, setTotalDaySurvey] = useState([
     {
-      name: 'Jan',
-      total: Math.floor(Math.random() * 5000) + 1000,
+      total: 0,
+      name: '',
     },
-    {
-      name: 'Feb',
-      total: Math.floor(Math.random() * 5000) + 1000,
-    },
-    {
-      name: 'Mar',
-      total: Math.floor(Math.random() * 5000) + 1000,
-    },
-    {
-      name: 'Apr',
-      total: Math.floor(Math.random() * 5000) + 1000,
-    },
-    {
-      name: 'May',
-      total: Math.floor(Math.random() * 5000) + 1000,
-    },
-    {
-      name: 'Jun',
-      total: Math.floor(Math.random() * 5000) + 1000,
-    },
-    {
-      name: 'Jul',
-      total: Math.floor(Math.random() * 5000) + 1000,
-    },
-    {
-      name: 'Aug',
-      total: Math.floor(Math.random() * 5000) + 1000,
-    },
-    {
-      name: 'Sep',
-      total: Math.floor(Math.random() * 5000) + 1000,
-    },
-    {
-      name: 'Oct',
-      total: Math.floor(Math.random() * 5000) + 1000,
-    },
-    {
-      name: 'Nov',
-      total: Math.floor(Math.random() * 5000) + 1000,
-    },
-    {
-      name: 'Dec',
-      total: Math.floor(Math.random() * 5000) + 1000,
-    },
-  ];
+  ]);
+
+  async function fetchTotalSurvey() {
+    try {
+      const totalSurvey = await getAllSurvey();
+      if (totalSurvey) {
+        const countByMonth = totalSurvey.reduce((acc, survey) => {
+          const suveyDate = new Date(survey.createdAt);
+
+          const month = suveyDate.getMonth() + 1;
+          const year = suveyDate.getFullYear();
+
+          // Create a key in the format "YYYY-MM"
+          const key = `${year}-${String(month).padStart(2, '0')}`;
+
+          // Increment the count for the month in the accumulator object
+          acc[key] = (acc[key] || 0) + 1;
+
+          return acc;
+        }, {} as Record<string, number>);
+
+        const totalDaySurvey = Object.keys(countByMonth).map((month) => {
+          return {
+            totalSurvey: countByMonth[month],
+            month: moment(month, 'YYYY-MM').format('MMMM'),
+          };
+        });
+
+        // console.log(totalDaySurvey[0].month);
+
+        const totalDayEachMonth = totalDaySurvey.map((month) => {
+          return {
+            total: month.totalSurvey,
+            name: month.month,
+          };
+        });
+
+        setTotalDaySurvey([...totalDayEachMonth]);
+      }
+    } catch (error) {
+      console.log('today', error);
+    }
+  }
+
+  useEffect(() => {
+    fetchTotalSurvey();
+  }, []);
 
   return (
     <ResponsiveContainer width="100%" height={450}>
-      <BarChart data={data}>
+      <BarChart data={totalDaySurvey}>
         <XAxis
           dataKey="name"
           stroke="#888888"

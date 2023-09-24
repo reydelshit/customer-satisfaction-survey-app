@@ -74,6 +74,10 @@ export default function Home() {
       value: 'apple',
       label: 'Apple',
     },
+    {
+      value: 'orange',
+      label: 'Orange',
+    },
   ];
 
   const clearState = () => {
