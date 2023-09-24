@@ -26,6 +26,7 @@ import { useState, useEffect } from 'react';
 import Analyze from './components/Analyze';
 import ViewDetails from './components/ViewDetails';
 import { Label } from '@/components/ui/label';
+import { Cake } from '@prisma/client';
 
 interface Feedback {
   id: number;
@@ -82,7 +83,7 @@ export default function Listing() {
     setAnalyzeDecider(false);
   };
 
-  const callGpt = async () => {
+  const analyzeNow = async () => {
     latestResponse
       .filter((survey) => survey.id === holdTheId)
       .map((survey) => {
@@ -100,7 +101,7 @@ export default function Listing() {
     const delay = 5000;
     setTimeout(() => {
       setShowLoadingContent(false);
-      callGpt();
+      analyzeNow();
     }, delay);
   };
   return (
@@ -110,7 +111,7 @@ export default function Listing() {
           Total Respondent: {latestResponse.length}
         </Label>
         {latestResponse && latestResponse.length > 0 ? (
-          <Table className="w-full self-end border-2">
+          <Table className="w-full self-end">
             <TableHeader>
               <TableRow>
                 <TableHead>Product</TableHead>
@@ -141,7 +142,7 @@ export default function Listing() {
             </TableBody>
           </Table>
         ) : (
-          <div className="h-[30rem] grid place-items-center place-content-center border-2 ">
+          <div className="h-[30rem] grid place-items-center place-content-center">
             <div className="spinner"></div>
           </div>
         )}

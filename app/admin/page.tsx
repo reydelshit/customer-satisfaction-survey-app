@@ -1,6 +1,19 @@
 import { Label } from '@/components/ui/label';
 import Overview from './components/Overview';
 import { ToggleTheme } from '@/components/ToggleTheme';
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from '@/components/ui/card';
+
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import Listing from './components/Listing';
+import Rankings from './components/Rankings';
+import Cake from './components/Cake';
 
 export default function Admin() {
   return (
@@ -16,7 +29,28 @@ export default function Admin() {
         <ToggleTheme />
       </div>
 
-      <Overview />
+      <Tabs defaultValue="overview" className="w-full">
+        <TabsList>
+          <TabsTrigger value="overview">Overview</TabsTrigger>
+          <TabsTrigger value="listing">Survey Listing</TabsTrigger>
+          <TabsTrigger value="rankings">Rankings</TabsTrigger>
+          <TabsTrigger value="cake">Cake</TabsTrigger>
+        </TabsList>
+        <TabsContent value="overview">
+          <Overview />
+        </TabsContent>
+        <TabsContent value="listing">
+          <Listing />
+        </TabsContent>
+
+        <TabsContent value="rankings">
+          <Rankings />
+        </TabsContent>
+
+        <TabsContent value="cake">
+          <Cake />
+        </TabsContent>
+      </Tabs>
     </div>
   );
 }

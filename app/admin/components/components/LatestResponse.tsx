@@ -66,7 +66,7 @@ export default function LatestResponse() {
       </div>
 
       {latestResponse.length > 0 ? (
-        <Table className="w-full self-end border-2">
+        <Table className="w-full self-end">
           <TableHeader>
             <TableRow>
               <TableHead>Product</TableHead>

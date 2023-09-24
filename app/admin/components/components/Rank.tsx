@@ -29,7 +29,7 @@ export default function Rank({ rating }: { rating: any }) {
             </div>
           </div>
           <div className="flex gap-10">
-            <div className="relative border-2 h-[20rem] w-[20rem] p-10 rounded-sm">
+            <div className="relative h-[20rem] w-[20rem] p-10 rounded-sm">
               <div className="border-[0.3rem] border-red-600 h-full">
                 image diri
               </div>
