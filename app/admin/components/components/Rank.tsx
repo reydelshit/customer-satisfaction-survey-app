@@ -7,13 +7,20 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table';
+import { Button } from '@/components/ui/button';
 
-export default function Rank({ rating }: { rating: any }) {
+export default function Rank({
+  rating,
+  selectedTitle,
+}: {
+  rating: any;
+  selectedTitle: string;
+}) {
   return (
     <>
       {rating.length > 0 ? (
         <>
-          <div className="relative h-[20rem] w-full md:w-[20rem] md:p-10 rounded-sm mb-2">
+          {/* <div className="relative h-[20rem] w-full md:w-[20rem] md:p-10 rounded-sm mb-2">
             <div className="border-[0.3rem] border-blue-600 h-full">
               image diri
             </div>
@@ -58,32 +65,36 @@ export default function Rank({ rating }: { rating: any }) {
                 <p className="text-gray-900 font-bold">RANK 3</p>
               </div>
             </div>
-          </div>
-
-          <Table className="text-center w-full">
-            <TableHeader>
-              <TableRow>
-                <TableHead>Rank</TableHead>
-                <TableHead>Product</TableHead>
-                <TableHead>Rating</TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {rating.map((rat: any, index: number) => {
-                return (
-                  <>
-                    {index > 2 && (
+          </div> */}
+          <div className="w-[50rem] flex flex-col">
+            <h1 className="font-bold text-2xl">{selectedTitle}</h1>
+            <Table className="text-center w-full">
+              <TableHeader>
+                <TableRow>
+                  <TableHead>Rank</TableHead>
+                  <TableHead>Product</TableHead>
+                  <TableHead>Rating</TableHead>
+                </TableRow>
+              </TableHeader>
+              <TableBody>
+                {rating.map((rat: any, index: number) => {
+                  return (
+                    <>
                       <TableRow className="text-start">
                         <TableCell>{index + 1}</TableCell>
                         <TableCell>{rat.product}</TableCell>
                         <TableCell>{rat.averageRating}</TableCell>
                       </TableRow>
-                    )}
-                  </>
-                );
-              })}
-            </TableBody>
-          </Table>
+                    </>
+                  );
+                })}
+              </TableBody>
+            </Table>
+
+            <Button onClick={() => window.print()} className="self-end">
+              Export
+            </Button>
+          </div>
         </>
       ) : (
         <div className="w-full h-[50vh] grid place-content-center">

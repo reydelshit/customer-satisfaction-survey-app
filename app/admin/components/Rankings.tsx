@@ -60,6 +60,7 @@ export default function Rankings() {
 
   const [selectedSort, setSelectedSort] =
     useState<AverageRatingProduct[]>(overallAverageRating);
+  const [selectedTitle, setSelectedTitle] = useState<string>('Overall');
 
   async function fetchOverallRating() {
     try {
@@ -151,12 +152,16 @@ export default function Rankings() {
     const selectedValue = event;
     if (selectedValue === 'Overall') {
       setSelectedSort(overallAverageRating);
+      setSelectedTitle('Overall');
     } else if (selectedValue === 'Food') {
       setSelectedSort(foodAverageRating);
+      setSelectedTitle('Food Quality');
     } else if (selectedValue === 'Service') {
       setSelectedSort(serviceAverageRating);
+      setSelectedTitle('Service Quality');
     } else {
       setSelectedSort(overallAverageRating);
+      setSelectedTitle('Overall');
     }
   };
 
@@ -179,9 +184,12 @@ export default function Rankings() {
         <div className="w-full md:w-[50rem] flex flex-col justify-center items-center p-2">
           <div className="flex flex-wrap flex-col justify-center items-center md:gap-10">
             {selectedSort.length !== 0 ? (
-              <Rank rating={selectedSort} />
+              <Rank rating={selectedSort} selectedTitle={selectedTitle} />
             ) : (
-              <Rank rating={overallAverageRating} />
+              <Rank
+                rating={overallAverageRating}
+                selectedTitle={selectedTitle}
+              />
             )}
           </div>
         </div>

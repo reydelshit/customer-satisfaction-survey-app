@@ -72,25 +72,6 @@ export default function Home() {
 
   const { toast } = useToast();
 
-  const frameworks = [
-    {
-      value: 'cocomelon',
-      label: 'Cocomelon',
-    },
-    {
-      value: 'mango',
-      label: 'Mango',
-    },
-    {
-      value: 'apple',
-      label: 'Apple',
-    },
-    {
-      value: 'orange',
-      label: 'Orange',
-    },
-  ];
-
   const clearState = () => {
     setName('');
     setOverallRating(0);
@@ -282,7 +263,11 @@ export default function Home() {
           />
 
           {/* additional:  */}
-          <Additional setFeedback={setFeedback} value={value} />
+          <Additional
+            feedback={feedback}
+            setFeedback={setFeedback}
+            value={value}
+          />
         </div>
         <Button onClick={handleSubmit} className="mt-2">
           Submit

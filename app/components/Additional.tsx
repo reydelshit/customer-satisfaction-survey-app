@@ -5,9 +5,11 @@ import { Textarea } from '@/components/ui/textarea';
 export default function Additional({
   setFeedback,
   value,
+  feedback,
 }: {
   setFeedback: (value: string) => void;
   value: string;
+  feedback: string;
 }) {
   return (
     <div className="mt-4">
@@ -21,6 +23,7 @@ export default function Additional({
         <br />
         <Textarea
           onChange={(e) => setFeedback(e.target.value)}
+          value={feedback}
           className="mt-4"
           placeholder="Type your feedback here."
         />

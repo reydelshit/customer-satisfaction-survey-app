@@ -166,7 +166,9 @@ export default function Listing() {
                     >
                       Analyze
                     </Button>
-                    <Button className="w-[8rem]">Export</Button>
+                    <Button onClick={() => window.print()} className="w-[8rem]">
+                      Export
+                    </Button>
                   </div>
 
                   {analyzeDecider && (
