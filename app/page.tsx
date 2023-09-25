@@ -146,7 +146,7 @@ export default function Home() {
 
   return (
     <main className="flex min-h-screen flex-col items-center  p-5 md:p-24">
-      <div className="w-full flex justify-end md:mt-[-2rem]">
+      <div className="w-full flex justify-end md:mt-[-4rem]">
         <ToggleTheme />
       </div>
       <div className="md:w-[30%] text-center md:p-2">

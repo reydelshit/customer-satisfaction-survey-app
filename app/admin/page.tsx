@@ -22,6 +22,10 @@ import { useEffect, useState } from 'react';
 import { loginAdmin } from './action/loginAdmin';
 import { useRouter } from 'next/navigation';
 import { Button } from '@/components/ui/button';
+import { MoonIcon, SunIcon, ExitIcon } from '@radix-ui/react-icons';
+import { prisma } from '@/prisma/db';
+import { logoutAdmin } from './action/logoutAdmin';
+import { spawn } from 'child_process';
 
 interface Account {
   id: number;
@@ -35,10 +39,12 @@ interface Account {
 
 export default function Admin() {
   const [account, setAccount] = useState<Account[]>([]);
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
 
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
+  const [username, setUsername] = useState<string>('');
+  const [password, setPassword] = useState<string>('');
+  const [storedId, setStoreId] = useState<number>(0);
+  const [warning, setWarning] = useState<string>('');
 
   const router = useRouter();
 
@@ -46,13 +52,20 @@ export default function Admin() {
     const checkIfExist = await loginAdmin({ username, password });
 
     console.log('test');
+
+    console.log(checkIfExist);
+    console.log(username, password, storedId);
+
     if (checkIfExist) {
       setIsLoggedIn(true);
 
-      localStorage.setItem('token', username);
-    }
+      setAccount([checkIfExist]);
 
-    return;
+      setStoreId(checkIfExist.id);
+      localStorage.setItem('token', username);
+    } else {
+      setWarning('Invalid username or password');
+    }
   };
 
   useEffect(() => {
@@ -61,6 +74,15 @@ export default function Admin() {
       setIsLoggedIn(true);
     }
   }, []);
+
+  const handleLogout = async () => {
+    await logoutAdmin(storedId);
+
+    console.log(username, password, storedId);
+
+    localStorage.removeItem('token');
+    setIsLoggedIn(false);
+  };
 
   return (
     <div className="flex flex-col p-5 md:p-8">
@@ -73,7 +95,13 @@ export default function Admin() {
                 Manage, View Analytics, See Responses, and View Rankings
               </Label>
             </div>
-            <ToggleTheme />
+            <div className="flex items-center gap-5">
+              <ToggleTheme />
+              <ExitIcon
+                onClick={() => handleLogout()}
+                className="cursor-pointer"
+              />
+            </div>
           </div>
 
           <Tabs defaultValue="overview" className="w-full">
@@ -104,7 +132,7 @@ export default function Admin() {
           <h1 className="font-bold">Admin Panel</h1>
           <div className="flex flex-col justify-center w-full md:w-[30%] h-[15rem] items-center">
             <input
-              className="w-full md:w-[80%] placeholder:text-center mb-2 border-2 p-2 rounded-md"
+              className="w-full md:w-[80%] placeholder:text-center mb-2 border-2 p-2 rounded-md text-center"
               value={username}
               onChange={(e) => setUsername(e.target.value)}
               type="text"
@@ -112,11 +140,15 @@ export default function Admin() {
             />
             <input
               value={password}
-              className="w-full md:w-[80%] placeholder:text-center  mb-2 border-2 p-2 rounded-md"
+              className="w-full md:w-[80%] placeholder:text-center  mb-2 border-2 p-2 rounded-md text-center"
               onChange={(e) => setPassword(e.target.value)}
               type="password"
               placeholder="password"
             />
+
+            {warning.length > 0 && (
+              <span className="m-2 text-sm text-red-600">{warning}</span>
+            )}
             <Button className="w-[8rem]" onClick={() => handleLogin()}>
               Login
             </Button>
