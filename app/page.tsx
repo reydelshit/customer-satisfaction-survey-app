@@ -149,7 +149,7 @@ export default function Home() {
       <div className="w-full flex justify-end md:mt-[-4rem]">
         <ToggleTheme />
       </div>
-      <div className="md:w-[30%] text-center md:p-2">
+      <div className="md:w-[35%] text-center md:p-2">
         <h1 className="mb-4 font-semibold">reydel's customer survey app</h1>
         <div className="text-start flex flex-col">
           <Input

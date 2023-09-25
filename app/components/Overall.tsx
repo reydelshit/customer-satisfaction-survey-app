@@ -1,5 +1,8 @@
 import { Label } from '@/components/ui/label';
 import { Input } from '@/components/ui/input';
+import { Button } from '@/components/ui/button';
+import { useState } from 'react';
+import ButtonScale from './ButtonScale';
 
 export default function Overall({
   overallRating,
@@ -21,14 +24,16 @@ export default function Overall({
       <Label className="text-gray-400 ml-2" htmlFor="services">
         (1 = Very Poor, 5 = Average, 10 = Excellent)
       </Label>
-      <Input
+      <ButtonScale setRating={setOverallRating} />
+
+      {/* <Input
         value={overallRating.toString()}
         type="number"
         max={10}
         onChange={(e) => setOverallRating(Number(e.target.value))}
         id="scale"
         placeholder="0"
-      />
+      /> */}
     </div>
   );
 }

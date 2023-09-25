@@ -1,5 +1,6 @@
 import { Label } from '@/components/ui/label';
 import { Input } from '@/components/ui/input';
+import ButtonScale from './ButtonScale';
 
 export default function LoyaltyFutureOrders({
   LFORating,
@@ -26,14 +27,16 @@ export default function LoyaltyFutureOrders({
           (1 = Very Poor, 5 = Average, 10 = Excellent)
         </Label>
 
-        <Input
+        <ButtonScale setRating={setLFORating} />
+
+        {/* <Input
           type="number"
           max={10}
           value={LFORating.toString()}
           onChange={(e) => setLFORating(Number(e.target.value))}
           id="services"
           placeholder="0"
-        />
+        /> */}
       </div>
 
       <div className="mt-2">

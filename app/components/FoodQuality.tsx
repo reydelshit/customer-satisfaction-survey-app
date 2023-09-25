@@ -1,5 +1,6 @@
 import { Label } from '@/components/ui/label';
 import { Input } from '@/components/ui/input';
+import ButtonScale from './ButtonScale';
 
 export default function FoodQuality({
   foodRating,
@@ -31,13 +32,15 @@ export default function FoodQuality({
           (1 = Very Poor, 5 = Average, 10 = Excellent)
         </Label>
 
-        <Input
+        <ButtonScale setRating={setFoodRating} />
+
+        {/* <Input
           value={foodRating.toString()}
           type="number"
           onChange={(e) => setFoodRating(Number(e.target.value))}
           id="services"
           placeholder="0"
-        />
+        /> */}
       </div>
 
       <div className="mt-2">
