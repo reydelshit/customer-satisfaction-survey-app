@@ -41,3 +41,13 @@ model Cake{
 
 }
      
+
+model Account{
+  id          Int      @id @default(autoincrement())
+  name        String
+  email       String
+  password    String
+  isLoggedIn  Boolean @default(false)
+  createdAt   DateTime? @default(now())
+  updatedAt   DateTime? @updatedAt
+}
