@@ -122,26 +122,26 @@ export default function Cake() {
     <div className="flex flex-col md:justify-between md:flex-row md:gap-10">
       <Toaster />
 
-      <div className="w-full flex justify-around">
-        <div className="self-start">
+      <div className="w-full flex justify-around flex-col md:flex-row">
+        <div className="self-start w-full">
           <h1 className="mt-5">Add Cake</h1>
-          <form className="flex flex-col w-fit mt-5">
+          <form className="flex flex-col  md:w-fit mt-5 w-full">
             <Input
-              className="mb-2 w-[25rem]"
+              className="mb-2 w-full md:w-[25rem]"
               name="cake"
               value={cake}
               onChange={(e) => setCake(e.target.value)}
               placeholder="Cake name"
             />
             <Input
-              className="mb-2 w-[25rem]"
+              className="mb-2 w-full md:w-[25rem]"
               name="description"
               value={description}
               onChange={(e) => setDescription(e.target.value)}
               placeholder="Description"
             />
             <Input
-              className="mb-2 w-[25rem]"
+              className="mb-2 w-full md:w-[25rem]"
               name="image"
               value={image}
               onChange={(e) => setImage(e.target.value)}
@@ -156,7 +156,7 @@ export default function Cake() {
           </form>
         </div>
 
-        <div className="w-[60%]">
+        <div className="w-full md:w-[100%] mt-10 md:mt-0">
           {storeCake.length > 0 ? (
             <Table>
               <TableCaption>A list of cake added.</TableCaption>
@@ -170,16 +170,20 @@ export default function Cake() {
               </TableHeader>
               <TableBody>
                 {storeCake.map((cake) => (
-                  <TableRow key={cake.id}>
-                    <TableCell className="w-[10rem] object-cover">
-                      <img className="w-[5rem]" src={cake.image!} alt="img" />
+                  <TableRow className="font-medium" key={cake.id}>
+                    <TableCell>
+                      <img
+                        className="w-full h-[4rem] object-contain rounded-md mb-4"
+                        src={cake.image!}
+                        alt="img"
+                      />
                     </TableCell>
                     <TableCell>{cake.name}</TableCell>
                     <TableCell>{cake.description}</TableCell>
-                    <TableCell>
+                    <TableCell className="flex">
                       <Dialog>
                         <DialogTrigger
-                          className="mr-2 bg-orange-500 p-2.5 rounded-md text-white font-semibold"
+                          className="w-full md:w-[5rem] mb-2 md:mr-2 bg-orange-500 p-2 rounded-md text-white font-semibold"
                           onClick={() =>
                             handleOpenModal({
                               title: cake.name,
@@ -229,7 +233,10 @@ export default function Cake() {
                         </DialogContent>
                       </Dialog>
 
-                      <Button onClick={() => handleDelete(cake.id)}>
+                      <Button
+                        className="w-[100%] md:w-[5rem]"
+                        onClick={() => handleDelete(cake.id)}
+                      >
                         Delete
                       </Button>
                     </TableCell>
