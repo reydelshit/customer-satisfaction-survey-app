@@ -157,85 +157,93 @@ export default function Cake() {
         </div>
 
         <div className="w-[60%]">
-          <Table>
-            <TableCaption>A list of cake added.</TableCaption>
-            <TableHeader>
-              <TableRow>
-                <TableHead>Image</TableHead>
-                <TableHead className="w-[10%]">Cake</TableHead>
-                <TableHead className="w-[50%]">Description</TableHead>
-                <TableHead className="w-[20%]">Action</TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {storeCake.map((cake) => (
-                <TableRow key={cake.id}>
-                  <TableCell className="w-[10rem] object-cover">
-                    <img className="w-[5rem]" src={cake.image!} alt="img" />
-                  </TableCell>
-                  <TableCell>{cake.name}</TableCell>
-                  <TableCell>{cake.description}</TableCell>
-                  <TableCell>
-                    <Dialog>
-                      <DialogTrigger
-                        className="mr-2 bg-orange-500 p-2.5 rounded-md text-white font-semibold"
-                        onClick={() =>
-                          handleOpenModal({
-                            title: cake.name,
-                            description: cake.description!,
-                            image: cake.image!,
-                          })
-                        }
-                      >
-                        Update
-                      </DialogTrigger>
-                      <DialogContent>
-                        <DialogHeader>
-                          <DialogTitle>Update Form</DialogTitle>
-
-                          <div className="w-full justify-center">
-                            <Input
-                              className="mb-2 w-[25rem]"
-                              name="cake"
-                              value={updateCake}
-                              onChange={(e) => setUpdateCake(e.target.value)}
-                              placeholder="Cake name"
-                            />
-
-                            <Input
-                              className="mb-2 w-[25rem]"
-                              name="description"
-                              value={updateDescription}
-                              onChange={(e) =>
-                                setUpdateDescription(e.target.value)
-                              }
-                              placeholder="Description"
-                            />
-
-                            <Input
-                              className="mb-2 w-[25rem]"
-                              name="Image"
-                              value={updateImage}
-                              onChange={(e) => setUpdateImage(e.target.value)}
-                              placeholder="Image url"
-                            />
-
-                            <Button onClick={() => updateNow(cake.id)}>
-                              Update
-                            </Button>
-                          </div>
-                        </DialogHeader>
-                      </DialogContent>
-                    </Dialog>
-
-                    <Button onClick={() => handleDelete(cake.id)}>
-                      Delete
-                    </Button>
-                  </TableCell>
+          {storeCake.length > 0 ? (
+            <Table>
+              <TableCaption>A list of cake added.</TableCaption>
+              <TableHeader>
+                <TableRow>
+                  <TableHead>Image</TableHead>
+                  <TableHead className="w-[10%]">Cake</TableHead>
+                  <TableHead className="w-[50%]">Description</TableHead>
+                  <TableHead className="w-[20%]">Action</TableHead>
                 </TableRow>
-              ))}
-            </TableBody>
-          </Table>
+              </TableHeader>
+              <TableBody>
+                {storeCake.map((cake) => (
+                  <TableRow key={cake.id}>
+                    <TableCell className="w-[10rem] object-cover">
+                      <img className="w-[5rem]" src={cake.image!} alt="img" />
+                    </TableCell>
+                    <TableCell>{cake.name}</TableCell>
+                    <TableCell>{cake.description}</TableCell>
+                    <TableCell>
+                      <Dialog>
+                        <DialogTrigger
+                          className="mr-2 bg-orange-500 p-2.5 rounded-md text-white font-semibold"
+                          onClick={() =>
+                            handleOpenModal({
+                              title: cake.name,
+                              description: cake.description!,
+                              image: cake.image!,
+                            })
+                          }
+                        >
+                          Update
+                        </DialogTrigger>
+                        <DialogContent>
+                          <DialogHeader>
+                            <DialogTitle>Update Form</DialogTitle>
+
+                            <div className="w-full justify-center">
+                              <Input
+                                className="mb-2 w-[25rem]"
+                                name="cake"
+                                value={updateCake}
+                                onChange={(e) => setUpdateCake(e.target.value)}
+                                placeholder="Cake name"
+                              />
+
+                              <Input
+                                className="mb-2 w-[25rem]"
+                                name="description"
+                                value={updateDescription}
+                                onChange={(e) =>
+                                  setUpdateDescription(e.target.value)
+                                }
+                                placeholder="Description"
+                              />
+
+                              <Input
+                                className="mb-2 w-[25rem]"
+                                name="Image"
+                                value={updateImage}
+                                onChange={(e) => setUpdateImage(e.target.value)}
+                                placeholder="Image url"
+                              />
+
+                              <Button onClick={() => updateNow(cake.id)}>
+                                Update
+                              </Button>
+                            </div>
+                          </DialogHeader>
+                        </DialogContent>
+                      </Dialog>
+
+                      <Button onClick={() => handleDelete(cake.id)}>
+                        Delete
+                      </Button>
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          ) : (
+            <div className="flex items-center space-x-4 w-full">
+              <div className="h-[30rem] grid place-items-center place-content-center w-full">
+                <div className="spinner"></div>
+              </div>
+            </div>
+          )}
         </div>
       </div>
     </div>

@@ -20,7 +20,7 @@ import {
 import { Textarea } from '@/components/ui/textarea';
 import { Button } from '@/components/ui/button';
 import { Checkbox } from '@/components/ui/checkbox';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import FoodQuality from './components/FoodQuality';
 import Overall from './components/Overall';
 import ServiceExperience from './components/ServiceExperience';
@@ -28,6 +28,17 @@ import LoyaltyFutureOrders from './components/LoyaltyFutureOrders';
 import Recommendation from './components/Recommendation';
 import Additional from './components/Additional';
 import { submitSurvey } from './actions/submitSurvey';
+import { ToggleTheme } from '@/components/ToggleTheme';
+import { getAllCake } from './admin/action/getCake';
+
+interface Cake {
+  id: number;
+  name: string;
+  description?: string | null;
+  image?: string | null;
+  createdAt: Date;
+  updatedAt: Date;
+}
 
 export default function Home() {
   const [open, setOpen] = useState(false);
@@ -99,6 +110,17 @@ export default function Home() {
     console.log('clear state');
   };
 
+  const [storeCake, setStoreCake] = useState<Cake[]>([]);
+
+  const getCake = async () => {
+    const cakes = await getAllCake();
+    setStoreCake(cakes);
+  };
+
+  useEffect(() => {
+    getCake();
+  }, []);
+
   const handleSubmit = async () => {
     await submitSurvey({
       name: name,
@@ -143,7 +165,10 @@ export default function Home() {
 
   return (
     <main className="flex min-h-screen flex-col items-center justify-between p-5 md:p-24">
-      <div className="md:w-[30%] text-center">
+      <div className="w-full flex justify-end">
+        <ToggleTheme />
+      </div>
+      <div className="md:w-[30%] text-center md:p-2">
         <h1 className="mb-4 font-semibold">reydel's customer survey app</h1>
         <div className="text-start flex flex-col">
           <Input
@@ -166,8 +191,8 @@ export default function Home() {
                   className="w-full mt-5 justify-between"
                 >
                   {value
-                    ? frameworks.find((framework) => framework.value === value)
-                        ?.label
+                    ? storeCake.find((framework) => framework.name === value)
+                        ?.name
                     : 'Select services...'}
                   <span>↓</span>
                 </Button>
@@ -180,19 +205,19 @@ export default function Home() {
                   />
                   <CommandEmpty>No services found.</CommandEmpty>
                   <CommandGroup>
-                    {frameworks.map((framework) => (
+                    {storeCake.map((framework) => (
                       <CommandItem
-                        key={framework.value}
+                        key={framework.name}
                         onSelect={(currentValue) => {
                           setValue(currentValue === value ? '' : currentValue);
                           setOpen(false);
                         }}
                       >
-                        {framework.label}
+                        {framework.name}
                         <span
                           className={cn(
                             'ml-auto h-4 w-4',
-                            value === framework.value
+                            value === framework.name
                               ? 'opacity-100'
                               : 'opacity-0',
                           )}

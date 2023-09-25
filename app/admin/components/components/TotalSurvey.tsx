@@ -39,7 +39,15 @@ export default function TotalSurvey() {
       </CardHeader>
       <CardContent>
         <h1 className="text-3xl font-bold">
-          {totalSurvey && totalSurvey ? totalSurvey : 0}
+          {totalSurvey && totalSurvey ? (
+            totalSurvey
+          ) : (
+            <div className="flex items-center space-x-4 w-full p-2">
+              <div className="grid place-items-start place-content-start w-full pl-5">
+                <div className="spinner w-10"></div>
+              </div>
+            </div>
+          )}
         </h1>
       </CardContent>
     </Card>
