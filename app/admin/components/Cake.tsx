@@ -180,7 +180,7 @@ export default function Cake() {
                     </TableCell>
                     <TableCell>{cake.name}</TableCell>
                     <TableCell>{cake.description}</TableCell>
-                    <TableCell className="flex">
+                    <TableCell className="flex flex-col md:flex-row">
                       <Dialog>
                         <DialogTrigger
                           className="w-full md:w-[5rem] mb-2 md:mr-2 bg-orange-500 p-2 rounded-md text-white font-semibold"
@@ -194,13 +194,13 @@ export default function Cake() {
                         >
                           Update
                         </DialogTrigger>
-                        <DialogContent>
+                        <DialogContent className="w-[80%]">
                           <DialogHeader>
                             <DialogTitle>Update Form</DialogTitle>
 
                             <div className="w-full justify-center">
                               <Input
-                                className="mb-2 w-[25rem]"
+                                className="mb-2 w-full md:w-[25rem]"
                                 name="cake"
                                 value={updateCake}
                                 onChange={(e) => setUpdateCake(e.target.value)}
@@ -208,7 +208,7 @@ export default function Cake() {
                               />
 
                               <Input
-                                className="mb-2 w-[25rem]"
+                                className="mb-2 w-full md:w-[25rem]"
                                 name="description"
                                 value={updateDescription}
                                 onChange={(e) =>
@@ -218,7 +218,7 @@ export default function Cake() {
                               />
 
                               <Input
-                                className="mb-2 w-[25rem]"
+                                className="mb-2 w-full md:w-[25rem]"
                                 name="Image"
                                 value={updateImage}
                                 onChange={(e) => setUpdateImage(e.target.value)}
