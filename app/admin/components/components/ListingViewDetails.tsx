@@ -8,7 +8,7 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card';
-import ViewDetails from './ViewDetails';
+import ViewDetails from './RankingsViewDetailsContainer';
 import Analyze from './Analyze';
 
 export default function ListingViewDetails({

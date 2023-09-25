@@ -32,7 +32,7 @@ export default function ButtonScale({
             key={number}
             className={`${
               isSelected ? 'bg-violet-700' : ''
-            } focus:bg-violet-700 mr-2 my-2 p-2`}
+            } focus:bg-violet-700 mr-2 my-2`}
           >
             {number + 1}
           </Button>
