@@ -66,7 +66,7 @@ export default function Rank({
               </div>
             </div>
           </div> */}
-          <div className="w-[50rem] flex flex-col">
+          <div className="w-screen p-4 md:w-[50rem] flex flex-col">
             <h1 className="font-bold text-2xl">{selectedTitle}</h1>
             <Table className="text-center w-full">
               <TableHeader>

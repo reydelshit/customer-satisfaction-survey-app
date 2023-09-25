@@ -182,7 +182,7 @@ export default function Rankings() {
 
       <div className="flex flex-col gap-5 justify-center items-center text-center">
         <div className="w-full md:w-[50rem] flex flex-col justify-center items-center p-2">
-          <div className="flex flex-wrap flex-col justify-center items-center md:gap-10">
+          <div>
             {selectedSort.length !== 0 ? (
               <Rank rating={selectedSort} selectedTitle={selectedTitle} />
             ) : (

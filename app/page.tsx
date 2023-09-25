@@ -145,8 +145,8 @@ export default function Home() {
   };
 
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-5 md:p-24">
-      <div className="w-full flex justify-end">
+    <main className="flex min-h-screen flex-col items-center  p-5 md:p-24">
+      <div className="w-full flex justify-end md:mt-[-2rem]">
         <ToggleTheme />
       </div>
       <div className="md:w-[30%] text-center md:p-2">
@@ -215,59 +215,63 @@ export default function Home() {
             </Label>
           </div>
 
-          {/*overall here */}
-          <Overall
-            overallRating={overallRating}
-            setOverallRating={setOverallRating}
-            value={value}
-          />
-          {/* food quality  */}
-          <FoodQuality
-            foodRating={foodRating}
-            setFoodRating={setFoodRating}
-            foodQualityQ1={foodQualityQ1}
-            setFoodQualityQ1={setFoodQualityQ1}
-            foodQualityQ2={foodQualityQ2}
-            setFoodQualityQ2={setFoodQualityQ2}
-            value={value}
-          />
+          {value && (
+            <>
+              {/*overall here */}
+              <Overall
+                overallRating={overallRating}
+                setOverallRating={setOverallRating}
+                value={value}
+              />
+              {/* food quality  */}
+              <FoodQuality
+                foodRating={foodRating}
+                setFoodRating={setFoodRating}
+                foodQualityQ1={foodQualityQ1}
+                setFoodQualityQ1={setFoodQualityQ1}
+                foodQualityQ2={foodQualityQ2}
+                setFoodQualityQ2={setFoodQualityQ2}
+                value={value}
+              />
 
-          {/* Service Experience:  */}
-          <ServiceExperience
-            serviceRating={serviceRating}
-            setServiceRating={setServiceRating}
-            serviceQ1={serviceQ1}
-            setServiceQ1={setServiceQ1}
-          />
+              {/* Service Experience:  */}
+              <ServiceExperience
+                serviceRating={serviceRating}
+                setServiceRating={setServiceRating}
+                serviceQ1={serviceQ1}
+                setServiceQ1={setServiceQ1}
+              />
 
-          {/* Recommendation */}
-          <Recommendation
-            recommendation={recommendation}
-            setRecommendation={setRecommendation}
-            recommendationQ1={recommendationQ1}
-            setRecommendationQ1={setRecommendationQ1}
-            value={value}
-          />
+              {/* Recommendation */}
+              <Recommendation
+                recommendation={recommendation}
+                setRecommendation={setRecommendation}
+                recommendationQ1={recommendationQ1}
+                setRecommendationQ1={setRecommendationQ1}
+                value={value}
+              />
 
-          {/* Loyalty and Future Orderrss:  */}
-          <LoyaltyFutureOrders
-            LFORating={LFORating}
-            setLFORating={setLFORating}
-            LFOQ1={LFOQ1}
-            setLFOQ1={setLFOQ1}
-            LFOQ2={LFOQ2}
-            setLFOQ2={setLFOQ2}
-            LFOQ3={LFOQ3}
-            setLFOQ3={setLFOQ3}
-            value={value}
-          />
+              {/* Loyalty and Future Orderrss:  */}
+              <LoyaltyFutureOrders
+                LFORating={LFORating}
+                setLFORating={setLFORating}
+                LFOQ1={LFOQ1}
+                setLFOQ1={setLFOQ1}
+                LFOQ2={LFOQ2}
+                setLFOQ2={setLFOQ2}
+                LFOQ3={LFOQ3}
+                setLFOQ3={setLFOQ3}
+                value={value}
+              />
 
-          {/* additional:  */}
-          <Additional
-            feedback={feedback}
-            setFeedback={setFeedback}
-            value={value}
-          />
+              {/* additional:  */}
+              <Additional
+                feedback={feedback}
+                setFeedback={setFeedback}
+                value={value}
+              />
+            </>
+          )}
         </div>
         <Button onClick={handleSubmit} className="mt-2">
           Submit
