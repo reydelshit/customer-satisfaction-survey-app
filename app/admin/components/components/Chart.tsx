@@ -63,7 +63,8 @@ export default function Chart() {
   }, []);
 
   return (
-    <>
+    <div className="w-full md:w-[60%] md:p-8">
+      <h1 className="mb-5 font-bold uppercase">Bar graph of responses</h1>
       <ResponsiveContainer width="100%" height={450}>
         {totalDaySurvey.length > 0 ? (
           <BarChart data={totalDaySurvey}>
@@ -89,6 +90,6 @@ export default function Chart() {
           </div>
         )}
       </ResponsiveContainer>
-    </>
+    </div>
   );
 }

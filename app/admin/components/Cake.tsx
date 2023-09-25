@@ -1,34 +1,16 @@
 'use client';
 
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
 import { addCake } from '../action/addCake';
 import { useToast } from '@/components/ui/use-toast';
 import { Toaster } from '@/components/ui/toaster';
 import { useEffect, useState } from 'react';
-
-import {
-  Table,
-  TableBody,
-  TableCaption,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from '@/components/ui/table';
-
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from '@/components/ui/dialog';
-
 import { getAllCake } from '../action/getCake';
 import { deleteCake } from '../action/deleteCake';
 import { updateCakeFunction } from '../action/updateCake';
+
+// component
+import CakeForm from './components/CakeForm';
+import CakeTable from './components/CakeTable';
 
 interface Cake {
   id: number;
@@ -42,7 +24,6 @@ export default function Cake() {
   const { toast } = useToast();
 
   const [storeCake, setStoreCake] = useState<Cake[]>([]);
-  const [openModal, setOpenModal] = useState<boolean>(false);
   const [cake, setCake] = useState<string>('');
   const [description, setDescription] = useState<string>('');
   const [image, setImage] = useState<string>('');
@@ -123,135 +104,28 @@ export default function Cake() {
       <Toaster />
 
       <div className="w-full flex justify-around flex-col md:flex-row">
-        <div className="self-start w-full">
-          <h1 className="mt-5">Add Cake</h1>
-          <form className="flex flex-col  md:w-fit mt-5 w-full">
-            <Input
-              className="mb-2 w-full md:w-[25rem]"
-              name="cake"
-              value={cake}
-              onChange={(e) => setCake(e.target.value)}
-              placeholder="Cake name"
-            />
-            <Input
-              className="mb-2 w-full md:w-[25rem]"
-              name="description"
-              value={description}
-              onChange={(e) => setDescription(e.target.value)}
-              placeholder="Description"
-            />
-            <Input
-              className="mb-2 w-full md:w-[25rem]"
-              name="image"
-              value={image}
-              onChange={(e) => setImage(e.target.value)}
-              placeholder="Image url"
-            />
-            <Button
-              onClick={(e) => handleSubmit(e)}
-              className="w-[8rem] self-end"
-            >
-              Add
-            </Button>
-          </form>
-        </div>
+        <CakeForm
+          cake={cake}
+          setCake={setCake}
+          description={description}
+          setDescription={setDescription}
+          image={image}
+          setImage={setImage}
+          handleSubmit={handleSubmit}
+        />
 
-        <div className="w-full md:w-[100%] mt-10 md:mt-0">
-          {storeCake.length > 0 ? (
-            <Table>
-              <TableCaption>A list of cake added.</TableCaption>
-              <TableHeader>
-                <TableRow>
-                  <TableHead>Image</TableHead>
-                  <TableHead className="w-[10%]">Cake</TableHead>
-                  <TableHead className="w-[50%]">Description</TableHead>
-                  <TableHead className="w-[20%]">Action</TableHead>
-                </TableRow>
-              </TableHeader>
-              <TableBody>
-                {storeCake.map((cake) => (
-                  <TableRow className="font-medium" key={cake.id}>
-                    <TableCell>
-                      <img
-                        className="w-full h-[4rem] object-contain rounded-md mb-4"
-                        src={cake.image!}
-                        alt="img"
-                      />
-                    </TableCell>
-                    <TableCell>{cake.name}</TableCell>
-                    <TableCell>{cake.description}</TableCell>
-                    <TableCell className="flex flex-col md:flex-row">
-                      <Dialog>
-                        <DialogTrigger
-                          className="w-full md:w-[5rem] mb-2 md:mr-2 bg-orange-500 p-2 rounded-md text-white font-semibold"
-                          onClick={() =>
-                            handleOpenModal({
-                              title: cake.name,
-                              description: cake.description!,
-                              image: cake.image!,
-                            })
-                          }
-                        >
-                          Update
-                        </DialogTrigger>
-                        <DialogContent className="w-[80%]">
-                          <DialogHeader>
-                            <DialogTitle>Update Form</DialogTitle>
-
-                            <div className="w-full justify-center">
-                              <Input
-                                className="mb-2 w-full md:w-[25rem]"
-                                name="cake"
-                                value={updateCake}
-                                onChange={(e) => setUpdateCake(e.target.value)}
-                                placeholder="Cake name"
-                              />
-
-                              <Input
-                                className="mb-2 w-full md:w-[25rem]"
-                                name="description"
-                                value={updateDescription}
-                                onChange={(e) =>
-                                  setUpdateDescription(e.target.value)
-                                }
-                                placeholder="Description"
-                              />
-
-                              <Input
-                                className="mb-2 w-full md:w-[25rem]"
-                                name="Image"
-                                value={updateImage}
-                                onChange={(e) => setUpdateImage(e.target.value)}
-                                placeholder="Image url"
-                              />
-
-                              <Button onClick={() => updateNow(cake.id)}>
-                                Update
-                              </Button>
-                            </div>
-                          </DialogHeader>
-                        </DialogContent>
-                      </Dialog>
-
-                      <Button
-                        className="w-[100%] md:w-[5rem]"
-                        onClick={() => handleDelete(cake.id)}
-                      >
-                        Delete
-                      </Button>
-                    </TableCell>
-                  </TableRow>
-                ))}
-              </TableBody>
-            </Table>
-          ) : (
-            <div className="flex items-center space-x-4 w-full">
-              <div className="h-[30rem] grid place-items-center place-content-center w-full">
-                <div className="spinner"></div>
-              </div>
-            </div>
-          )}
-        </div>
+        <CakeTable
+          storeCake={storeCake}
+          handleOpenModal={handleOpenModal}
+          updateNow={updateNow}
+          updateCake={updateCake}
+          setUpdateCake={setUpdateCake}
+          updateDescription={updateDescription}
+          setUpdateDescription={setUpdateDescription}
+          updateImage={updateImage}
+          setUpdateImage={setUpdateImage}
+          handleDelete={handleDelete}
+        />
       </div>
     </div>
   );

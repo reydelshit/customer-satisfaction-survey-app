@@ -4,14 +4,10 @@ import { Button } from '@/components/ui/button';
 import { useState, useEffect } from 'react';
 
 import { getAllSurvey } from '../action/getTotalSurvey';
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select';
+
 import Rank from './components/Rank';
+import RankingsTable from './components/RankingsTable';
+import RankingSort from './components/RankingSort';
 
 interface Feedback {
   id: number;
@@ -68,9 +64,6 @@ export default function Rankings() {
       if (feedbackSurvey) {
         setFeedbacks(feedbackSurvey);
 
-        // console.log(feedbackSurvey);
-
-        // overall rate average
         const averageRatings: Record<string, AverageRating> =
           feedbackSurvey.reduce((acc, item) => {
             if (!acc[item.product]) {
@@ -167,33 +160,13 @@ export default function Rankings() {
 
   return (
     <div className="w-full flex flex-col gap-5 justify-center items-center text-center mt-5">
-      <div className="self-end">
-        <Select onValueChange={handleSorting}>
-          <SelectTrigger className="w-[180px]">
-            <SelectValue placeholder="Sort" />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectItem value="Overall">Overall</SelectItem>
-            <SelectItem value="Food">Food Quality</SelectItem>
-            <SelectItem value="Service">Service Quality</SelectItem>
-          </SelectContent>
-        </Select>
-      </div>
+      <RankingSort handleSorting={handleSorting} />
 
-      <div className="flex flex-col gap-5 justify-center items-center text-center">
-        <div className="w-full md:w-[50rem] flex flex-col justify-center items-center p-2">
-          <div>
-            {selectedSort.length !== 0 ? (
-              <Rank rating={selectedSort} selectedTitle={selectedTitle} />
-            ) : (
-              <Rank
-                rating={overallAverageRating}
-                selectedTitle={selectedTitle}
-              />
-            )}
-          </div>
-        </div>
-      </div>
+      <RankingsTable
+        selectedSort={selectedSort}
+        overallAverageRating={overallAverageRating}
+        selectedTitle={selectedTitle}
+      />
     </div>
   );
 }

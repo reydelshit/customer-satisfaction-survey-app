@@ -1,35 +1,23 @@
 'use client';
 
 import { Input } from '@/components/ui/input';
-import { cn } from '@/lib/utils';
 import { Label } from '@/components/ui/label';
 import { Toaster } from '@/components/ui/toaster';
 import { useToast } from '@/components/ui/use-toast';
-import {
-  Command,
-  CommandEmpty,
-  CommandGroup,
-  CommandInput,
-  CommandItem,
-} from '@/components/ui/command';
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from '@/components/ui/popover';
-import { Textarea } from '@/components/ui/textarea';
 import { Button } from '@/components/ui/button';
-import { Checkbox } from '@/components/ui/checkbox';
 import { useEffect, useState } from 'react';
+import { submitSurvey } from './actions/submitSurvey';
+import { ToggleTheme } from '@/components/ToggleTheme';
+import { getAllCake } from './admin/action/getCake';
+
+// components
+import SelectCake from './components/SelectCake';
 import FoodQuality from './components/FoodQuality';
 import Overall from './components/Overall';
 import ServiceExperience from './components/ServiceExperience';
 import LoyaltyFutureOrders from './components/LoyaltyFutureOrders';
 import Recommendation from './components/Recommendation';
 import Additional from './components/Additional';
-import { submitSurvey } from './actions/submitSurvey';
-import { ToggleTheme } from '@/components/ToggleTheme';
-import { getAllCake } from './admin/action/getCake';
 
 interface Cake {
   id: number;
@@ -41,11 +29,12 @@ interface Cake {
 }
 
 export default function Home() {
+  const { toast } = useToast();
+
   const [open, setOpen] = useState(false);
   const [value, setValue] = useState('');
 
   const [name, setName] = useState('');
-
   const [overallRating, setOverallRating] = useState(0);
 
   // food quality
@@ -70,9 +59,18 @@ export default function Home() {
   // Additional
   const [feedback, setFeedback] = useState('');
 
-  const { toast } = useToast();
+  const [storeCake, setStoreCake] = useState<Cake[]>([]);
 
-  const clearState = () => {
+  const getCake = async () => {
+    const cakes = await getAllCake();
+    setStoreCake(cakes);
+  };
+
+  useEffect(() => {
+    getCake();
+  }, []);
+
+  const clearInputFields = () => {
     setName('');
     setOverallRating(0);
     setFoodRating(0);
@@ -88,19 +86,8 @@ export default function Home() {
     setLFOQ3('');
     setFeedback('');
 
-    console.log('clear state');
+    // console.log('clear state');
   };
-
-  const [storeCake, setStoreCake] = useState<Cake[]>([]);
-
-  const getCake = async () => {
-    const cakes = await getAllCake();
-    setStoreCake(cakes);
-  };
-
-  useEffect(() => {
-    getCake();
-  }, []);
 
   const handleSubmit = async () => {
     await submitSurvey({
@@ -126,22 +113,7 @@ export default function Home() {
       description: 'Thank you for your feedback!',
     });
 
-    setName('');
-    setOverallRating(0);
-    setFoodRating(0);
-    setFoodQualityQ1('');
-    setFoodQualityQ2('');
-    setServiceRating(0);
-    setServiceQ1('');
-    setRecommendation(true);
-    setRecommendationQ1('');
-    setLFORating(0);
-    setLFOQ1('');
-    setLFOQ2('');
-    setLFOQ3('');
-    setFeedback('');
-
-    console.log('clear state');
+    clearInputFields();
   };
 
   return (
@@ -161,59 +133,13 @@ export default function Home() {
           <Label className="text-gray-400 ml-2 mt-2" htmlFor="name">
             Optional
           </Label>
-
-          <div>
-            <Popover open={open} onOpenChange={setOpen}>
-              <PopoverTrigger asChild>
-                <Button
-                  variant="outline"
-                  role="combobox"
-                  aria-expanded={open}
-                  className="w-full mt-5 justify-between"
-                >
-                  {value
-                    ? storeCake.find((framework) => framework.name === value)
-                        ?.name
-                    : 'Select services...'}
-                  <span>↓</span>
-                </Button>
-              </PopoverTrigger>
-              <PopoverContent className="w-[30rem] p-0">
-                <Command>
-                  <CommandInput
-                    placeholder="Search services..."
-                    className="h-9"
-                  />
-                  <CommandEmpty>No services found.</CommandEmpty>
-                  <CommandGroup>
-                    {storeCake.map((framework) => (
-                      <CommandItem
-                        key={framework.name}
-                        onSelect={(currentValue) => {
-                          setValue(currentValue === value ? '' : currentValue);
-                          setOpen(false);
-                        }}
-                      >
-                        {framework.name}
-                        <span
-                          className={cn(
-                            'ml-auto h-4 w-4',
-                            value === framework.name
-                              ? 'opacity-100'
-                              : 'opacity-0',
-                          )}
-                        ></span>
-                      </CommandItem>
-                    ))}
-                  </CommandGroup>
-                </Command>
-              </PopoverContent>
-            </Popover>
-
-            <Label className="text-gray-400 ml-2" htmlFor="services">
-              Food services offered
-            </Label>
-          </div>
+          <SelectCake
+            storeCake={storeCake}
+            setOpen={setOpen}
+            open={open}
+            value={value}
+            setValue={setValue}
+          />
 
           {value && (
             <>
@@ -223,7 +149,7 @@ export default function Home() {
                 setOverallRating={setOverallRating}
                 value={value}
               />
-              {/* food quality  */}
+
               <FoodQuality
                 foodRating={foodRating}
                 setFoodRating={setFoodRating}
@@ -234,7 +160,6 @@ export default function Home() {
                 value={value}
               />
 
-              {/* Service Experience:  */}
               <ServiceExperience
                 serviceRating={serviceRating}
                 setServiceRating={setServiceRating}
@@ -242,7 +167,6 @@ export default function Home() {
                 setServiceQ1={setServiceQ1}
               />
 
-              {/* Recommendation */}
               <Recommendation
                 recommendation={recommendation}
                 setRecommendation={setRecommendation}
@@ -251,7 +175,6 @@ export default function Home() {
                 value={value}
               />
 
-              {/* Loyalty and Future Orderrss:  */}
               <LoyaltyFutureOrders
                 LFORating={LFORating}
                 setLFORating={setLFORating}
@@ -264,7 +187,6 @@ export default function Home() {
                 value={value}
               />
 
-              {/* additional:  */}
               <Additional
                 feedback={feedback}
                 setFeedback={setFeedback}
