@@ -100,11 +100,11 @@ export default function Admin() {
           </Tabs>
         </>
       ) : (
-        <div className="w-full h-[80vh] flex justify-center items-center flex-col">
+        <div className="w-full h-[80vh] flex justify-center items-center flex-col p-2">
           <h1 className="font-bold">Admin Panel</h1>
-          <div className="flex flex-col justify-center w-[30%] h-[15rem] items-center">
+          <div className="flex flex-col justify-center w-full md:w-[30%] h-[15rem] items-center">
             <input
-              className="w-[80%] placeholder:text-center mb-2 border-2 p-2 rounded-md"
+              className="w-full md:w-[80%] placeholder:text-center mb-2 border-2 p-2 rounded-md"
               value={username}
               onChange={(e) => setUsername(e.target.value)}
               type="text"
@@ -112,7 +112,7 @@ export default function Admin() {
             />
             <input
               value={password}
-              className="w-[80%] placeholder:text-center  mb-2 border-2 p-2 rounded-md"
+              className="w-full md:w-[80%] placeholder:text-center  mb-2 border-2 p-2 rounded-md"
               onChange={(e) => setPassword(e.target.value)}
               type="password"
               placeholder="password"
