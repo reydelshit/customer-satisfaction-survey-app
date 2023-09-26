@@ -44,7 +44,7 @@ export default function SelectCake({
             <span>↓</span>
           </Button>
         </PopoverTrigger>
-        <PopoverContent className="w-[30rem] p-0">
+        <PopoverContent className="w-full md:w-[30rem] p-0">
           <Command>
             <CommandInput placeholder="Search services..." className="h-9" />
             <CommandEmpty>No services found.</CommandEmpty>
